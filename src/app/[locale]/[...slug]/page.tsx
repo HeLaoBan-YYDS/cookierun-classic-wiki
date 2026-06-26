@@ -12,7 +12,7 @@ import { CONTENT_TYPES } from "@/config/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import en from "@/locales/en.json";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://vvultimatum.sbs";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cookierun-classic-wiki.wiki";
 type Messages = typeof en;
 
 function languageAlternates(pathname: string) {
@@ -32,8 +32,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
     const ct = slug[0];
     const ctTitle = ct.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
     const ctMessages = (messages as unknown as Record<string, Record<string, string>>)[ct];
-    const title = ctMessages?.overviewTitle || `${ctTitle} — VV Ultimatum Wiki`;
-    const description = ctMessages?.overviewDescription || `Browse all ${ctTitle.toLowerCase()} guides and resources for VV Ultimatum.`;
+    const title = ctMessages?.overviewTitle || `${ctTitle} — CookieRun Classic Wiki`;
+    const description = ctMessages?.overviewDescription || `Browse all ${ctTitle.toLowerCase()} guides and resources for CookieRun Classic.`;
     return { title, description, alternates: { canonical: `/${ct}`, languages: languageAlternates(`/${ct}`) }, openGraph: { title, description, url: `${siteUrl}/${ct}`, images: [`${siteUrl}/images/hero.webp`] } };
   }
   const [contentType, ...articleSlug] = slug;
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
   if (!item) return { title: "Not Found" };
   const pathname = `/${contentType}/${articleSlug.join("/")}`;
   const image = item.metadata.image?.startsWith("http") ? item.metadata.image : `${siteUrl}${item.metadata.image ?? "/images/hero.webp"}`;
-  return { title: `${item.metadata.title} — VV Ultimatum Wiki`, description: item.metadata.description, alternates: { canonical: pathname, languages: languageAlternates(pathname) }, openGraph: { type: "article", title: item.metadata.title, description: item.metadata.description, url: `${siteUrl}${pathname}`, images: [image] }, twitter: { card: "summary_large_image", images: [image] } };
+  return { title: `${item.metadata.title} — CookieRun Classic Wiki`, description: item.metadata.description, alternates: { canonical: pathname, languages: languageAlternates(pathname) }, openGraph: { type: "article", title: item.metadata.title, description: item.metadata.description, url: `${siteUrl}${pathname}`, images: [image] }, twitter: { card: "summary_large_image", images: [image] } };
 }
 
 export default async function SlugPage({ params }: { params: Promise<{ locale: Locale; slug: string[] }> }) {
@@ -55,7 +55,7 @@ async function NavigationPage({ locale, contentType, navGroups }: { locale: Loca
   if (!CONTENT_TYPES.includes(contentType)) notFound();
   const messages = (await getMessages({ locale })) as Messages;
   const items = await getAllContent(contentType, locale);
-  const listData = { "@context": "https://schema.org", "@type": "ItemList", name: `${contentType} — VV Ultimatum Wiki`, itemListElement: items.map((item, index) => ({ "@type": "ListItem", position: index + 1, url: `${siteUrl}/${contentType}/${item.slug}`, name: item.metadata.title })) };
+  const listData = { "@context": "https://schema.org", "@type": "ItemList", name: `${contentType} — CookieRun Classic Wiki`, itemListElement: items.map((item, index) => ({ "@type": "ListItem", position: index + 1, url: `${siteUrl}/${contentType}/${item.slug}`, name: item.metadata.title })) };
 
   // 读取分类标题（优先用 locale JSON 里的，没有就转 slug）
   const sectionTitle = (messages as unknown as Record<string, Record<string, string>>)[contentType]?.overviewTitle
@@ -73,7 +73,8 @@ async function DetailPage({ locale, contentType, slug, navGroups }: { locale: Lo
   const pathname = `/${contentType}/${slug.join("/")}`;
   const tocLabel = messages.shared.tableOfContents || messages.shared.inThisSection || "Table of Contents";
   const sectionLabel = contentType.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-  const articleData = { "@context": "https://schema.org", "@type": "Article", headline: item.metadata.title, description: item.metadata.description, image: `${siteUrl}${item.metadata.image ?? "/images/hero.webp"}`, datePublished: item.metadata.date, dateModified: item.metadata.lastModified ?? item.metadata.date, mainEntityOfPage: `${siteUrl}${pathname}`, author: { "@type": "Organization", name: "VV Ultimatum Wiki" }, publisher: { "@type": "Organization", name: "VV Ultimatum Wiki", logo: { "@type": "ImageObject", url: `${siteUrl}/android-chrome-512x512.png` } } };
+  const articleImage = item.metadata.image?.startsWith("http") ? item.metadata.image : `${siteUrl}${item.metadata.image ?? "/images/hero.webp"}`;
+  const articleData = { "@context": "https://schema.org", "@type": "Article", headline: item.metadata.title, description: item.metadata.description, image: articleImage, datePublished: item.metadata.date, dateModified: item.metadata.lastModified ?? item.metadata.date, mainEntityOfPage: `${siteUrl}${pathname}`, author: { "@type": "Organization", name: "CookieRun Classic Wiki" }, publisher: { "@type": "Organization", name: "CookieRun Classic Wiki", logo: { "@type": "ImageObject", url: `${siteUrl}/android-chrome-512x512.png` } } };
   const breadcrumbData = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: siteUrl }, { "@type": "ListItem", position: 2, name: sectionLabel, item: `${siteUrl}/${contentType}` }, { "@type": "ListItem", position: 3, name: item.metadata.title, item: `${siteUrl}${pathname}` }] };
 
   const relatedLabel = messages.shared.relatedGuides || "Related Guides";

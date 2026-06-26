@@ -1,10 +1,10 @@
 {
   "site": {
-    "name": "VV: ULTIMATUM",
-    "shortName": "VV Ultimatum",
-    "tagline": "Fan-Made Community Wiki",
-    "description": "Your complete companion for VV: ULTIMATUM on Roblox. Master all three races Shinigami, Quincy, and Hollow with in-depth guides, boss strategies, build optimization, and the latest codes.",
-    "legalNotice": "Non-official fan wiki. Made by players, for players."
+    "name": "CookieRun Classic Wiki",
+    "shortName": "CookieRun Classic",
+    "tagline": "Independent Fan-Made Community Wiki",
+    "description": "CookieRun Classic Wiki covers beginner tips, coin farming, Cookie and Pet combos, Treasure upgrades, episode guides, League scoring, events, and verified codes.",
+    "legalNotice": "Independent fan-made CookieRun Classic community wiki. Not affiliated with or endorsed by Devsisters."
   },
   "nav": {
     "races": "Races",
@@ -21,24 +21,24 @@
   },
   "home": {
     "meta": {
-      "title": "VV: ULTIMATUM — Codes, Builds, Guides | VV Ultimatum Wiki",
-      "description": "Complete VV: ULTIMATUM wiki with active codes, boss strategies, race guides, build optimization, and progression walkthroughs for Shinigami, Quincy, and Hollow."
+      "title": "CookieRun Classic Wiki — Guides, Codes & Best Combos",
+      "description": "CookieRun Classic Wiki covers beginner tips, coin farming, Cookie and Pet combos, Treasure upgrades, episode guides, League scoring, events, and verified codes."
     },
     "hero": {
-      "eyebrow": "Fan-Made Community Wiki",
-      "title": "VV: ULTIMATUM",
-      "description": "Your complete companion for VV: ULTIMATUM on Roblox. Master all three races Shinigami, Quincy, and Hollow with in-depth guides, boss strategies, build optimization, and the latest codes.",
+      "eyebrow": "Independent Fan-Made Community Wiki",
+      "title": "CookieRun Classic Wiki",
+      "description": "Escape the Witch's Oven in the revived classic CookieRun adventure. Jump, slide, collect Jellies, build powerful Cookie and Pet combinations, and compete for higher scores in real-time League races.",
       "stats": [
-        "Launched Jun 5",
-        "Updated Jun 11",
-        "3 Races",
-        "Lv100 Cap",
-        "130+ Skills"
+        "Launched Jun 25, 2026",
+        "Updated Jun 24, 2026",
+        "iOS & Android",
+        "2-Button Controls",
+        "300M+ Franchise Players"
       ],
       "primaryCta": "Start Beginner Guide",
-      "secondaryCta": "Compare Races",
+      "secondaryCta": "Build the Best Combo",
       "tertiaryCta": "Check Active Codes",
-      "videoLabel": "Official media"
+      "videoLabel": "Official DevNow Showcase"
     },
     "updates": {
       "title": "动态更新",
@@ -429,10 +429,10 @@
       ]
     },
     "finalCta": {
-      "title": "Ready to Master VV: ULTIMATUM?",
-      "description": "From your first steps in Fort Adams to endgame boss fights our community wiki has you covered with free, up-to-date guides.",
+      "title": "Ready to Master CookieRun Classic?",
+      "description": "From your first escape from the Witch's Oven to advanced Cookie, Pet, and Treasure combinations, our independent community wiki helps you farm resources, improve scores, and climb the League rankings.",
       "primary": "Read the Beginner Guide",
-      "secondary": "Play on Roblox"
+      "secondary": "Play CookieRun Classic"
     }
   },
   "bosses": {
@@ -466,21 +466,24 @@
     "noGuidesAvailable": "No guides available yet. Check back soon!"
   },
   "footer": {
-    "aboutTitle": "VV Ultimatum Wiki",
-    "about": "VV Ultimatum Wiki is an independent fan-built guide hub covering progression routes, races, bosses, builds, and essential game knowledge for new and veteran players alike.",
+    "aboutTitle": "CookieRun Classic Wiki",
+    "about": "CookieRun Classic Wiki is an independent fan-made guide site for the global mobile runner by Devsisters. It covers beginner progression, Cookies, Pets, Treasures, Episodes, resource farming, scoring combinations, League strategies, events, and verified coupon information. This website is not affiliated with or endorsed by Devsisters.",
     "quickLinks": "Quick Links",
     "guides": "Guides",
     "legal": "Legal",
-    "copyright": "2026 VV: ULTIMATUM Wiki. Not affiliated with Midnight Continent or Roblox.",
-    "description": "Free Bleach-inspired fighting RPG on Roblox. 3 races, 130+ skills, Lv100 cap.",
-    "playGame": "Play VV: ULTIMATUM",
-    "officialDiscord": "Official Discord",
-    "officialYoutube": "Official YouTube",
-    "vvBuilder": "VV Builder (Skill Planner)",
+    "copyright": "2026 CookieRun Classic Wiki. Not affiliated with or endorsed by Devsisters.",
+    "description": "Classic mobile running action with Cookies, Pets, Treasures, Episodes, and real-time League competition.",
+    "playGame": "Play CookieRun Classic",
+    "officialDiscord": "CookieRun Community Discord",
+    "officialYoutube": "Official DevNow Showcase",
+    "vvBuilder": "Official Coupon Redemption",
+    "officialX": "Official X",
+    "officialInstagram": "Official Instagram",
+    "appStore": "Apple App Store",
     "beginnerGuide": "Beginner Guide",
-    "raceGuides": "Race Guides",
-    "bossGuides": "Boss Guides",
-    "buildGuide": "Build Guide",
+    "raceGuides": "Cookies",
+    "bossGuides": "League Guide",
+    "buildGuide": "Combo Guide",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service"
   }

@@ -3,8 +3,8 @@ import { LegalPage } from "@/components/legal-page";
 export default function AboutPage() {
   return (
     <LegalPage title="About">
-      <p>VV Ultimatum Wiki is an independent fan-built guide hub covering progression routes, races, bosses, builds, and essential game knowledge for new and veteran players alike.</p>
-      <p>The layout, navigation, article cards, and detail format are reproduced from the target VV: ULTIMATUM wiki pages requested for this implementation.</p>
+      <p>CookieRun Classic Wiki is an independent fan-made guide hub for the global mobile runner by Devsisters, covering beginner progression, Cookies, Pets, Treasures, Episodes, coupon information, resource farming, combinations, and League strategy.</p>
+      <p>The site is built for community reference and is not affiliated with or endorsed by Devsisters.</p>
     </LegalPage>
   );
 }
