@@ -82,31 +82,31 @@
           "badge": "Beginner",
           "title": "CookieRun Classic Beginner Guide",
           "description": "Learn jump and slide timing, early upgrades, Episode basics, currencies, and first-run mistakes to avoid.",
-          "href": "/beginner-guide"
+          "href": "/guide/cookierun-classic-beginner-guide"
         },
         {
           "badge": "Updated",
           "title": "CookieRun Classic Coupon Codes",
           "description": "Check coupon redemption steps, DevPlay account requirements, reward notes, and active code status.",
-          "href": "/coupon-redemption"
+          "href": "/codes/cookierun-classic-codes"
         },
         {
           "badge": "Popular",
           "title": "CookieRun Classic Coin Farming",
           "description": "Build practical early-game farming routes with Cookies, Pets, Treasures, and efficient upgrade priorities.",
-          "href": "/guide/cookierun-classic-coin-farming"
+          "href": "/farming/cookierun-classic-coin-farming"
         },
         {
           "badge": "Popular",
           "title": "CookieRun Classic Cookie and Pet Combos",
           "description": "Compare Cookie skills, Pet abilities, Treasure bonuses, relay choices, and Power Plus effects for better scoring.",
-          "href": "/guide/cookierun-classic-cookie-pet-combos"
+          "href": "/combi/cookierun-classic-best-combi"
         },
         {
           "badge": "Guide",
           "title": "CookieRun Classic League Guide",
           "description": "Prepare for real-time League races with stronger combinations, better routes, and higher-score decisions.",
-          "href": "/league"
+          "href": "/guide/cookierun-classic-guide"
         },
         {
           "badge": "Guide",
@@ -118,13 +118,13 @@
           "badge": "New",
           "title": "CookieRun Classic Launch Rewards",
           "description": "Review the worldwide launch rewards, rookie benefits, Coins, Crystals, and Treasure ticket bonuses.",
-          "href": "/launch-rewards"
+          "href": "/release/cookierun-classic-release-date"
         },
         {
           "badge": "Official",
           "title": "CookieRun Classic Download",
           "description": "Find the official Google Play and App Store release pages for the global mobile version.",
-          "href": "/download"
+          "href": "/release/cookierun-classic-global"
         }
       ]
     },
@@ -168,13 +168,14 @@
     },
     "explore": {
       "title": "CookieRun Classic Guide Modules",
-      "description": "Browse the main CookieRun Classic guide modules for beginner basics, launch rewards, Cookies, Pets, Treasures, League scoring, downloads, and coupon redemption.",
+      "description": "Browse the main CookieRun Classic guide modules for beginner basics, launch rewards, Cookies, combo planning, Treasures, League scoring, download notes, and coupon redemption.",
+      "readFullGuide": "Read Full Guide",
       "modules": [
         {
           "order": 1,
           "name": "CookieRun Classic Beginner Guide",
           "description": "Learn the essential controls and progression systems before starting your first run. This guide covers jumping, sliding, collecting Jellies, avoiding obstacles, and preparing your first Cookie combination.",
-          "href": "/beginner-guide",
+          "href": "/guide/cookierun-classic-beginner-guide",
           "displayType": "step-by-step",
           "highlights": [
             {
@@ -203,7 +204,7 @@
           "order": 2,
           "name": "CookieRun Classic Launch Rewards",
           "description": "Check the rewards announced for the worldwide launch of CookieRun Classic. These resources provide an early supply of currency and Treasure tickets for new players.",
-          "href": "/launch-rewards",
+          "href": "/release/cookierun-classic-release-date",
           "displayType": "card-list",
           "highlights": [
             {
@@ -257,7 +258,7 @@
           "order": 4,
           "name": "CookieRun Classic League Guide",
           "description": "Understand the real-time competitive League and how its scoring objective differs from a normal practice run. Players compete globally by building combinations and pushing for the highest possible score.",
-          "href": "/league",
+          "href": "/guide/cookierun-classic-guide",
           "displayType": "card-list",
           "highlights": [
             {
@@ -280,9 +281,9 @@
         },
         {
           "order": 5,
-          "name": "CookieRun Classic Pets",
-          "description": "Browse the companion Pets that support Cookies during runs. Pets form part of the game's collection and combination system alongside Cookies and Treasures.",
-          "href": "/pets",
+          "name": "CookieRun Classic Combi Planning",
+          "description": "Browse Cookie and Pet pairings that support stronger runs. Combi planning connects Cookie skills, Pet abilities, relay choices, and Treasure upgrades.",
+          "href": "/combi/cookierun-classic-best-combi",
           "displayType": "card-list",
           "highlights": [
             {
@@ -333,7 +334,7 @@
           "order": 7,
           "name": "CookieRun Classic Download",
           "description": "Find the verified mobile download pages published for CookieRun Classic by Devsisters. The game is available as a free mobile title with optional in-app purchases.",
-          "href": "/download",
+          "href": "/release/cookierun-classic-global",
           "displayType": "card-list",
           "highlights": [
             {
@@ -362,7 +363,7 @@
           "order": 8,
           "name": "CookieRun Classic Coupon Redemption",
           "description": "Follow the official DevPlay process for redeeming CookieRun Classic coupon codes. A valid DevPlay account email or in-game Player ID is required.",
-          "href": "/coupon-redemption",
+          "href": "/codes/cookierun-classic-codes",
           "displayType": "step-by-step",
           "highlights": [
             {

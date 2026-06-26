@@ -10,14 +10,27 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cookierun-classic-w
 
 type Messages = typeof en;
 
+function localizedPathname(pathname: string, locale: Locale) {
+  return locale === routing.defaultLocale ? pathname : `/${locale}${pathname === "/" ? "" : pathname}`;
+}
+
+function languageAlternates(pathname: string) {
+  return {
+    ...Object.fromEntries(routing.locales.map((locale) => [locale, localizedPathname(pathname, locale)])),
+    "x-default": pathname,
+  };
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  const loc = locale as Locale;
   const messages = (await getMessages({ locale })) as Messages;
+  const canonical = localizedPathname("/", loc);
   return {
     title: messages.home.meta.title,
     description: messages.home.meta.description,
-    alternates: { canonical: locale === "en" ? "/" : `/${locale}`, languages: { en: "/" } },
-    openGraph: { title: messages.home.meta.title, description: messages.home.meta.description, url: siteUrl, images: [`${siteUrl}/images/hero.webp`] },
+    alternates: { canonical, languages: languageAlternates("/") },
+    openGraph: { title: messages.home.meta.title, description: messages.home.meta.description, url: `${siteUrl}${canonical === "/" ? "" : canonical}`, images: [`${siteUrl}/images/hero.webp`] },
   };
 }
 

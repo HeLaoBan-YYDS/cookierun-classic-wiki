@@ -1,1 +1,499 @@
-{}
+{
+  "site": {
+    "name": "CookieRun Classic Wiki",
+    "shortName": "CookieRun Classic",
+    "tagline": "独立ファンメイドコミュニティWiki",
+    "description": "CookieRun Classic Wikiは、初心者向けヒント、コイン稼ぎ、クッキーとペットのコンビ、宝物強化、エピソードガイド、リーグのスコア攻略、イベント、確認済みコードを扱います。",
+    "legalNotice": "独立したファンメイドのCookieRun ClassicコミュニティWikiです。Devsistersとは提携しておらず、承認も受けていません。"
+  },
+  "nav": {
+    "guide": "ガイド",
+    "codes": "コード",
+    "cookies": "クッキー",
+    "combi": "コンビ",
+    "treasures": "宝物",
+    "farming": "稼ぎ",
+    "release": "リリース",
+    "community": "コミュニティ"
+  },
+  "home": {
+    "meta": {
+      "title": "CookieRun Classic Wiki — ガイド、コード、最強コンビ",
+      "description": "CookieRun Classic Wikiは、初心者向けヒント、コイン稼ぎ、クッキーとペットのコンビ、宝物強化、エピソードガイド、リーグのスコア攻略、イベント、確認済みコードを扱います。"
+    },
+    "hero": {
+      "eyebrow": "独立ファンメイドコミュニティWiki",
+      "title": "CookieRun Classic Wiki",
+      "description": "復活したクラシックCookieRunの冒険で、魔女のオーブンから脱出しましょう。ジャンプ、スライド、ゼリー集め、強力なクッキーとペットの組み合わせ作りを行い、リアルタイムのリーグレースで高スコアを競います。",
+      "stats": [
+        "2026年6月25日リリース",
+        "2026年6月24日更新",
+        "iOS & Android",
+        "2ボタン操作",
+        "シリーズ累計プレイヤー3億人以上"
+      ],
+      "primaryCta": "初心者ガイドを始める",
+      "secondaryCta": "最強コンビを作る",
+      "tertiaryCta": "有効なコードを確認",
+      "videoLabel": "公式DevNowショーケース"
+    },
+    "updates": {
+      "title": "最近の更新",
+      "browse": "すべてのガイドを見る",
+      "viewAll": "すべて表示"
+    },
+    "start": {
+      "eyebrow": "ここから開始",
+      "title": "あなたのCookieRun Classic攻略",
+      "cards": [
+        {
+          "number": "1",
+          "title": "初心者ガイド",
+          "description": "基本のジャンプとスライド操作、アカウント進行、序盤強化、通貨、エピソードラン、新規プレイヤーが避けるべき重要なミスを学びます。"
+        },
+        {
+          "number": "2",
+          "title": "コイン稼ぎ",
+          "description": "序盤で安定して使えるコインルート、適したクッキーとペット、役立つ宝物、最初の数時間で効率的な強化優先度を見つけます。"
+        },
+        {
+          "number": "3",
+          "title": "クッキーとペットのコンビ",
+          "description": "クッキースキル、ペット能力、宝物ボーナス、リレー選択、Power Plus効果がどのように連動して、より強いスコア用コンビを作るかを理解します。"
+        },
+        {
+          "number": "4",
+          "title": "リーグスコア攻略",
+          "description": "より良いルート、ゼリー回収、障害物タイミング、ボーナス効果、宝物強化、リアルタイムリーグ戦略で競争スコアを伸ばします。"
+        }
+      ]
+    },
+    "popular": {
+      "eyebrow": "人気ページ",
+      "title": "今注目の記事",
+      "quickLinks": [
+        "初心者ガイド",
+        "コイン稼ぎ",
+        "最強コンビ",
+        "リーグスコア"
+      ],
+      "cards": [
+        {
+          "badge": "初心者",
+          "title": "CookieRun Classic初心者ガイド",
+          "description": "ジャンプとスライドのタイミング、序盤強化、エピソードの基本、通貨、初回ランで避けたいミスを学びます。",
+          "href": "/guide/cookierun-classic-beginner-guide"
+        },
+        {
+          "badge": "更新済み",
+          "title": "CookieRun Classicクーポンコード",
+          "description": "クーポン登録手順、DevPlayアカウント要件、報酬メモ、有効コードの状態を確認します。",
+          "href": "/codes/cookierun-classic-codes"
+        },
+        {
+          "badge": "人気",
+          "title": "CookieRun Classicコイン稼ぎ",
+          "description": "クッキー、ペット、宝物、効率的な強化優先度で実用的な序盤ファーミングルートを組みます。",
+          "href": "/farming/cookierun-classic-coin-farming"
+        },
+        {
+          "badge": "人気",
+          "title": "CookieRun Classicクッキーとペットのコンビ",
+          "description": "より良いスコアのために、クッキースキル、ペット能力、宝物ボーナス、リレー選択、Power Plus効果を比較します。",
+          "href": "/combi/cookierun-classic-best-combi"
+        },
+        {
+          "badge": "ガイド",
+          "title": "CookieRun Classicガイド",
+          "description": "より強い組み合わせ、より良いルート、高スコア判断でリアルタイムリーグレースに備えます。",
+          "href": "/guide/cookierun-classic-guide"
+        },
+        {
+          "badge": "ガイド",
+          "title": "CookieRun Classic宝物",
+          "description": "宝物強化、Supreme Treasureチケット、宝物がクッキーとペットの組み合わせをどう支えるかを理解します。",
+          "href": "/treasures"
+        },
+        {
+          "badge": "新着",
+          "title": "CookieRun Classicリリースガイド",
+          "description": "グローバルリリース報酬、ルーキー特典、コイン、クリスタル、宝物チケットボーナスを確認します。",
+          "href": "/release/cookierun-classic-release-date"
+        },
+        {
+          "badge": "公式",
+          "title": "CookieRun Classicダウンロード",
+          "description": "グローバルモバイル版の公式Google PlayおよびApp Storeリリースページを見つけます。",
+          "href": "/release/cookierun-classic-global"
+        }
+      ]
+    },
+    "aboutGame": {
+      "title": "CookieRun Classicとは？",
+      "paragraphs": [
+        "CookieRun Classicは、Devsistersによるカジュアル横スクロールランナーで、オリジナルCookieRunの公式を世界中のモバイルプレイヤーに再び届けます。各ランはジャンプとスライドボタンで操作し、ゼリーを集め、障害物を避け、魔女のオーブンから脱出します。",
+        "プレイヤーはクッキー、ペット、宝物を集めて強化し、より強い組み合わせを解放し、テーマ別エピソードを探索し、リアルタイムリーグシステムで世界中のランナーと競えます。韓国文化と料理に着想を得た限定クッキーやストーリーも用意されています。"
+      ],
+      "stats": [
+        {
+          "label": "開発元",
+          "value": "Devsisters"
+        },
+        {
+          "label": "プラットフォーム",
+          "value": "iOS & Android"
+        },
+        {
+          "label": "ジャンル",
+          "value": "カジュアルエンドレスランナー"
+        },
+        {
+          "label": "グローバルリリース",
+          "value": "2026年6月25日"
+        },
+        {
+          "label": "シリーズ規模",
+          "value": "プレイヤー3億人以上"
+        },
+        {
+          "label": "基本操作",
+          "value": "ジャンプ & スライド"
+        },
+        {
+          "label": "競争モード",
+          "value": "リアルタイムリーグ"
+        }
+      ],
+      "cta": "すべてのガイドを見る"
+    },
+    "explore": {
+      "title": "CookieRun Classicガイドモジュール",
+      "description": "初心者の基本、リリース報酬、クッキー、コンビ計画、宝物、リーグスコア、ダウンロード情報、クーポン登録向けの主要CookieRun Classicガイドモジュールを閲覧できます。",
+      "readFullGuide": "完全ガイドを読む",
+      "modules": [
+        {
+          "order": 1,
+          "name": "CookieRun Classic初心者ガイド",
+          "description": "最初のランを始める前に、必須の操作と進行システムを学びます。このガイドでは、ジャンプ、スライド、ゼリー回収、障害物回避、最初のクッキーコンビ準備を扱います。",
+          "href": "/guide/cookierun-classic-beginner-guide",
+          "displayType": "step-by-step",
+          "highlights": [
+            {
+              "label": "1",
+              "detail": "2つの基本操作を使います。ジャンプで障害物を越え、スライドで危険物の下を通過します。"
+            },
+            {
+              "label": "2",
+              "detail": "各ラン中にゼリーを集めてスコアを伸ばします。"
+            },
+            {
+              "label": "3",
+              "detail": "クッキーが魔女のオーブンから逃げる間、障害物を避けて走り続けます。"
+            },
+            {
+              "label": "4",
+              "detail": "クッキーとペットを集め、宝物を強化してより強いラン用コンビを作ります。"
+            },
+            {
+              "label": "5",
+              "detail": "準備ができたらリーグに入り、世界中のプレイヤーと高スコアを競います。"
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "name": "CookieRun Classicリリース報酬",
+          "description": "CookieRun Classicの世界同時リリースで発表された報酬を確認します。これらのリソースは、新規プレイヤーに序盤の通貨と宝物チケットを提供します。",
+          "href": "/release/cookierun-classic-release-date",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "クリスタル",
+              "detail": "世界同時リリースギフトにはクリスタル300個が含まれます。",
+              "badge": "リリースギフト"
+            },
+            {
+              "label": "コイン",
+              "detail": "世界同時リリースギフトにはコイン100,000枚が含まれます。",
+              "badge": "リリースギフト"
+            },
+            {
+              "label": "チケット",
+              "detail": "世界同時リリースギフトにはSupreme Treasureチケット3枚が含まれます。",
+              "badge": "リリースギフト"
+            },
+            {
+              "label": "ルーキー",
+              "detail": "新規プレイヤーは特別ログイン報酬、ミッション、イベント、初心者バフを利用できます。"
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "name": "CookieRun Classicクッキー",
+          "description": "CookieRun Classicで入手できる収集クッキーを探索し、新登場キャラクターを追いかけましょう。韓国文化と料理に着想を得た限定デザインが含まれます。",
+          "href": "/cookies",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "Lotus",
+              "detail": "Pine Monk Cookieの旅団に関係する新登場クッキーです。",
+              "badge": "新着"
+            },
+            {
+              "label": "Pine",
+              "detail": "謎めいたLotus Root Phantom CookieとLotus Sitterが旅団に加わるクッキーです。"
+            },
+            {
+              "label": "文化",
+              "detail": "CookieRun Classicには韓国文化と韓国料理に着想を得た限定クッキーが登場します。"
+            },
+            {
+              "label": "収集",
+              "detail": "プレイヤーはスコア用コンビに使うさまざまなクッキーを集めて育成できます。"
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "name": "CookieRun Classicリーグガイド",
+          "description": "リアルタイム競争リーグと、通常の練習ランとは異なるスコア目標を理解します。プレイヤーは組み合わせを作り、可能な限り高いスコアを目指して世界中で競います。",
+          "href": "/guide/cookierun-classic-guide",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "リーグ",
+              "detail": "リーグはゲームのリアルタイム競争モードです。"
+            },
+            {
+              "label": "スコア",
+              "detail": "リーグの主な目的は、可能な限り高いランスコアを達成することです。"
+            },
+            {
+              "label": "グローバル",
+              "detail": "リーグでは世界中のランナーと競えます。"
+            },
+            {
+              "label": "コンボ",
+              "detail": "強化したクッキー、ペット、宝物を組み合わせてから、より高いリーグスコアに挑戦できます。"
+            }
+          ]
+        },
+        {
+          "order": 5,
+          "name": "CookieRun Classicコンビ計画",
+          "description": "より強いランを支えるクッキーとペットの組み合わせを見ていきます。コンビ計画は、クッキースキル、ペット能力、リレー選択、宝物強化をつなげます。",
+          "href": "/combi/cookierun-classic-best-combi",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "Lotus",
+              "detail": "Lotus Root Phantom Cookieと一緒に登場した新しい相棒です。",
+              "badge": "新着"
+            },
+            {
+              "label": "ペット",
+              "detail": "プレイヤーはペットを集め、お気に入りのクッキーと組み合わせられます。"
+            },
+            {
+              "label": "ペアリング",
+              "detail": "クッキーとペットの選択は、それぞれのラン用コンビの一部です。"
+            },
+            {
+              "label": "サポート",
+              "detail": "より強いスコア用コンビを準備する際、強化済み宝物と一緒にペットを入れられます。"
+            }
+          ]
+        },
+        {
+          "order": 6,
+          "name": "CookieRun Classic宝物",
+          "description": "宝物がクッキーとペットのコンビにどう貢献するかを学びます。宝物強化は、組み合わせをより強くする公式の方法の一つです。",
+          "href": "/treasures",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "強化",
+              "detail": "宝物は強化することでラン用コンビの力を高められます。"
+            },
+            {
+              "label": "チケット",
+              "detail": "世界同時リリースギフトではSupreme Treasureチケット3枚が提供されます。"
+            },
+            {
+              "label": "コンボ",
+              "detail": "宝物は集めたクッキーやペットと一緒に使われます。"
+            },
+            {
+              "label": "リーグ",
+              "detail": "より高いリーグスコアを狙う前に宝物強化を準備できます。"
+            }
+          ]
+        },
+        {
+          "order": 7,
+          "name": "CookieRun Classicダウンロード",
+          "description": "Devsistersが公開したCookieRun Classicの確認済みモバイルダウンロードページを見つけます。ゲームは任意のアプリ内課金を含む無料モバイルタイトルです。",
+          "href": "/release/cookierun-classic-global",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "Android",
+              "detail": "CookieRun ClassicはDevsisters Corporation名義でGoogle Playから公式に利用できます。"
+            },
+            {
+              "label": "iPhone",
+              "detail": "公式App Store版はiPhoneに対応しています。"
+            },
+            {
+              "label": "iPad",
+              "detail": "公式App Store版はiPadにも対応しています。"
+            },
+            {
+              "label": "サイズ",
+              "detail": "初期のiOS App Store掲載では、ダウンロードサイズは約358.1 MBとされています。"
+            },
+            {
+              "label": "無料",
+              "detail": "ゲームは無料でダウンロードでき、任意のアプリ内課金を含みます。"
+            }
+          ]
+        },
+        {
+          "order": 8,
+          "name": "CookieRun Classicクーポン登録",
+          "description": "CookieRun Classicのクーポンコードを登録する公式DevPlay手順に従います。有効なDevPlayアカウントメールまたはゲーム内Player IDが必要です。",
+          "href": "/codes/cookierun-classic-codes",
+          "displayType": "step-by-step",
+          "highlights": [
+            {
+              "label": "1",
+              "detail": "公式CookieRun Classicクーポン登録ページを開きます。"
+            },
+            {
+              "label": "2",
+              "detail": "DevPlayアカウントに接続されたメールアドレス、またはゲーム内設定のPlayer IDを入力します。"
+            },
+            {
+              "label": "3",
+              "detail": "CookieRun Classicクーポンコードを入力してフォームを送信します。"
+            },
+            {
+              "label": "4",
+              "detail": "クーポンが期限切れでないこと、コードが正しく入力されていることを確認します。"
+            },
+            {
+              "label": "5",
+              "detail": "登録後にCookieRun Classicを再起動して報酬を受け取ります。"
+            }
+          ]
+        }
+      ]
+    },
+    "faq": {
+      "title": "よくある質問",
+      "description": "CookieRun Classicに関するよくある質問への短い回答です。",
+      "items": [
+        {
+          "question": "CookieRun Classicとは何ですか？",
+          "answer": "CookieRun ClassicはDevsistersのモバイル横スクロールランナーで、プレイヤーはジャンプ、スライド、ゼリー回収、障害物回避を行い、収集できるクッキー、ペット、宝物とともに魔女のオーブンから脱出します。"
+        },
+        {
+          "question": "CookieRun Classicはモバイルで遊べますか？",
+          "answer": "CookieRun ClassicはApple App StoreとGoogle Playを通じてiOSとAndroidで利用でき、無料ダウンロードと任意のアプリ内課金に対応しています。"
+        },
+        {
+          "question": "CookieRun Classicのクッキーとペットのコンボはどう機能しますか？",
+          "answer": "CookieRun Classicのコンボは、クッキースキル、ペット能力、宝物強化、リレー選択、Power Plus効果を組み合わせて、スコアや資源ランを向上させます。"
+        },
+        {
+          "question": "CookieRun Classicのクーポンコードはどう登録しますか？",
+          "answer": "CookieRun Classicのクーポンコードは、公式DevPlayクーポンページでDevPlayアカウントメールまたはゲーム内Player IDを入力し、コードを送信してゲームを再起動することで登録できます。"
+        },
+        {
+          "question": "CookieRun Classicのリーグとは何ですか？",
+          "answer": "CookieRun Classicリーグは、プレイヤーが強化したクッキー、ペット、宝物を準備し、世界中でより高いランスコアを競うリアルタイム競争モードです。"
+        }
+      ]
+    },
+    "finalCta": {
+      "title": "CookieRun Classicを極める準備はできましたか？",
+      "description": "魔女のオーブンからの最初の脱出から、高度なクッキー、ペット、宝物の組み合わせまで、独立コミュニティWikiが資源稼ぎ、スコア向上、リーグ順位上げをサポートします。",
+      "primary": "初心者ガイドを読む",
+      "secondary": "CookieRun Classicをプレイ"
+    }
+  },
+  "guide": {
+    "overviewTitle": "CookieRun Classicガイド",
+    "overviewDescription": "CookieRun Classicの初心者、進行、リセマラ、スターターパック、エピソード、パーティーラン、無課金ガイドを閲覧できます。"
+  },
+  "codes": {
+    "overviewTitle": "CookieRun Classicコード",
+    "overviewDescription": "CookieRun Classicコード、登録メモ、DevPlay要件、報酬詳細、公開コードの状態を確認できます。"
+  },
+  "cookies": {
+    "overviewTitle": "CookieRun Classicクッキー",
+    "overviewDescription": "クッキー選択、初心者向け候補、レジェンド候補、コイン稼ぎ向けクッキー、個別クッキー強化ガイドを比較できます。"
+  },
+  "combi": {
+    "overviewTitle": "CookieRun Classicコンビ",
+    "overviewDescription": "スコア、コイン稼ぎ、Peppermintラン、クッキー選択、ペット、宝物、リレー計画向けのベストコンビ構成を探せます。"
+  },
+  "treasures": {
+    "overviewTitle": "CookieRun Classic宝物",
+    "overviewDescription": "宝物ドローの助言、最高の宝物、強化優先度、宝物がCookieRun Classicのランをどう強化するかを確認できます。"
+  },
+  "farming": {
+    "overviewTitle": "CookieRun Classic稼ぎ",
+    "overviewDescription": "効率的なCookieRun Classic進行のためのコイン稼ぎルート、100kと400kコイン稼ぎ計画、資源構成を見つけます。"
+  },
+  "release": {
+    "overviewTitle": "CookieRun Classicリリース",
+    "overviewDescription": "グローバルリリース、Android、iOS、インドでの提供状況、プラットフォームメモなどCookieRun Classicのリリース情報を追跡します。"
+  },
+  "community": {
+    "overviewTitle": "CookieRun Classicコミュニティ",
+    "overviewDescription": "CookieRun Classicのコミュニティリンク、ソーシャルチャンネル、Facebook参照、X更新、ゲームをフォローできる場所を見つけます。"
+  },
+  "shared": {
+    "wikiNavigation": "Wikiナビゲーション",
+    "activeCodes": "有効なコード",
+    "updated": "更新済み",
+    "viewAllCodes": "すべてのコードを見る",
+    "playOnRoblox": "モバイルでプレイ",
+    "inThisSection": "このセクション",
+    "tableOfContents": "目次",
+    "nextSteps": "次のステップ",
+    "needHelp": "ヘルプが必要ですか？",
+    "relatedReading": "関連する読み物",
+    "relatedGuides": "関連ガイド",
+    "readMore": "続きを読む",
+    "officialMedia": "公式メディア",
+    "home": "ホーム",
+    "noGuidesAvailable": "まだ利用できるガイドはありません。近日中にまた確認してください！",
+    "menu": "メニュー",
+    "toggleTheme": "テーマ切り替え"
+  },
+  "footer": {
+    "aboutTitle": "CookieRun Classic Wiki",
+    "about": "CookieRun Classic Wikiは、Devsistersによるグローバルモバイルランナーのための独立ファンメイドガイドサイトです。初心者進行、クッキー、ペット、宝物、エピソード、資源稼ぎ、スコア用コンビ、リーグ戦略、イベント、確認済みクーポン情報を扱います。このウェブサイトはDevsistersと提携しておらず、承認も受けていません。",
+    "quickLinks": "クイックリンク",
+    "guides": "ガイド",
+    "legal": "法的情報",
+    "copyright": "2026 CookieRun Classic Wiki. Devsistersとは提携しておらず、承認も受けていません。",
+    "description": "クッキー、ペット、宝物、エピソード、リアルタイムリーグ競争を備えたクラシックなモバイルランアクション。",
+    "playGame": "CookieRun Classicをプレイ",
+    "officialDiscord": "CookieRunコミュニティDiscord",
+    "officialYoutube": "公式DevNowショーケース",
+    "vvBuilder": "公式クーポン登録",
+    "officialX": "公式X",
+    "officialInstagram": "公式Instagram",
+    "appStore": "Apple App Store",
+    "beginnerGuide": "初心者ガイド",
+    "raceGuides": "クッキー",
+    "bossGuides": "リーグガイド",
+    "buildGuide": "コンボガイド",
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfService": "利用規約"
+  }
+}

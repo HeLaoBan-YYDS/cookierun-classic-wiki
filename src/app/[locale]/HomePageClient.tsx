@@ -19,7 +19,7 @@ export default function HomePageClient({ home, locale, articles, recentArticles 
   const YOUTUBE_VIDEO_ID = "QECwBKhHj3k";
   const YOUTUBE_START_SECONDS = 2814;
   const BEGINNER_GUIDE_HREF = "/guide/cookierun-classic-beginner-guide";
-  const COMBO_GUIDE_HREF = "/guide/cookierun-classic-cookie-pet-combos";
+  const COMBO_GUIDE_HREF = "/combi/cookierun-classic-best-combi";
   const CODES_HREF = "/codes";
   const PLAY_GAME_HREF = "https://play.google.com/store/apps/details?id=com.devsisters.crg";
 
@@ -65,7 +65,7 @@ export default function HomePageClient({ home, locale, articles, recentArticles 
             ))}
           </div>
           <Button asChild className="mt-5 w-full" variant="outline">
-            <Link href={localizeHref("/codes", locale)}>{home.updates.browse}</Link>
+            <Link href={localizeHref("/guide", locale)}>{home.updates.browse}</Link>
           </Button>
         </Card>
 
@@ -224,7 +224,7 @@ export default function HomePageClient({ home, locale, articles, recentArticles 
                     href={localizeHref(mod.href, locale)}
                     className="mt-5 inline-flex items-center text-sm font-semibold text-[hsl(var(--nav-theme))] hover:underline"
                   >
-                    Read Full Guide <ChevronRight className="ml-1 h-4 w-4" />
+                    {home.explore.readFullGuide} <ChevronRight className="ml-1 h-4 w-4" />
                   </Link>
                 </div>
               </div>

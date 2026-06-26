@@ -1,1 +1,499 @@
-{}
+{
+  "site": {
+    "name": "CookieRun Classic Wiki",
+    "shortName": "CookieRun Classic",
+    "tagline": "독립 팬메이드 커뮤니티 위키",
+    "description": "CookieRun Classic Wiki는 초보자 팁, 코인 파밍, 쿠키와 펫 콤비, 보물 강화, 에피소드 가이드, 리그 점수 공략, 이벤트, 검증된 코드를 다룹니다.",
+    "legalNotice": "독립 팬메이드 CookieRun Classic 커뮤니티 위키입니다. Devsisters와 제휴하거나 Devsisters의 보증을 받은 사이트가 아닙니다."
+  },
+  "nav": {
+    "guide": "가이드",
+    "codes": "코드",
+    "cookies": "쿠키",
+    "combi": "콤비",
+    "treasures": "보물",
+    "farming": "파밍",
+    "release": "출시",
+    "community": "커뮤니티"
+  },
+  "home": {
+    "meta": {
+      "title": "CookieRun Classic Wiki — 가이드, 코드, 베스트 콤비",
+      "description": "CookieRun Classic Wiki는 초보자 팁, 코인 파밍, 쿠키와 펫 콤비, 보물 강화, 에피소드 가이드, 리그 점수 공략, 이벤트, 검증된 코드를 다룹니다."
+    },
+    "hero": {
+      "eyebrow": "독립 팬메이드 커뮤니티 위키",
+      "title": "CookieRun Classic Wiki",
+      "description": "부활한 클래식 CookieRun 모험에서 마녀의 오븐을 탈출하세요. 점프하고, 슬라이드하고, 젤리를 모으고, 강력한 쿠키와 펫 조합을 만들며 실시간 리그 레이스에서 더 높은 점수를 겨루세요.",
+      "stats": [
+        "2026년 6월 25일 출시",
+        "2026년 6월 24일 업데이트",
+        "iOS 및 Android",
+        "2버튼 조작",
+        "프랜차이즈 플레이어 3억+"
+      ],
+      "primaryCta": "초보자 가이드 시작",
+      "secondaryCta": "베스트 콤비 만들기",
+      "tertiaryCta": "활성 코드 확인",
+      "videoLabel": "공식 DevNow 쇼케이스"
+    },
+    "updates": {
+      "title": "최근 업데이트",
+      "browse": "모든 가이드 보기",
+      "viewAll": "전체 보기"
+    },
+    "start": {
+      "eyebrow": "여기서 시작",
+      "title": "나만의 CookieRun Classic 여정",
+      "cards": [
+        {
+          "number": "1",
+          "title": "초보자 가이드",
+          "description": "기본 점프와 슬라이드 조작, 계정 성장, 초반 강화, 재화, 에피소드 러닝, 신규 플레이어가 피해야 할 중요한 실수를 배웁니다."
+        },
+        {
+          "number": "2",
+          "title": "코인 파밍",
+          "description": "초반에 안정적으로 쓸 수 있는 코인 루트, 적합한 쿠키와 펫, 유용한 보물, 첫 플레이 시간에 효율적인 강화 우선순위를 찾습니다."
+        },
+        {
+          "number": "3",
+          "title": "쿠키와 펫 콤비",
+          "description": "쿠키 스킬, 펫 능력, 보물 보너스, 릴레이 선택, Power Plus 효과가 어떻게 함께 작동해 더 강한 점수 조합을 만드는지 이해합니다."
+        },
+        {
+          "number": "4",
+          "title": "리그 점수 공략",
+          "description": "더 나은 루트, 젤리 수집, 장애물 타이밍, 보너스 효과, 보물 강화, 실시간 리그 전략으로 경쟁 점수를 높입니다."
+        }
+      ]
+    },
+    "popular": {
+      "eyebrow": "인기 페이지",
+      "title": "지금 인기 있는 글",
+      "quickLinks": [
+        "초보자 가이드",
+        "코인 파밍",
+        "베스트 콤비",
+        "리그 점수"
+      ],
+      "cards": [
+        {
+          "badge": "초보자",
+          "title": "CookieRun Classic 초보자 가이드",
+          "description": "점프와 슬라이드 타이밍, 초반 강화, 에피소드 기본, 재화, 첫 러닝에서 피해야 할 실수를 배웁니다.",
+          "href": "/guide/cookierun-classic-beginner-guide"
+        },
+        {
+          "badge": "업데이트",
+          "title": "CookieRun Classic 쿠폰 코드",
+          "description": "쿠폰 등록 단계, DevPlay 계정 요구 사항, 보상 참고 사항, 활성 코드 상태를 확인합니다.",
+          "href": "/codes/cookierun-classic-codes"
+        },
+        {
+          "badge": "인기",
+          "title": "CookieRun Classic 코인 파밍",
+          "description": "쿠키, 펫, 보물, 효율적인 강화 우선순위로 실전 초반 파밍 루트를 구성합니다.",
+          "href": "/farming/cookierun-classic-coin-farming"
+        },
+        {
+          "badge": "인기",
+          "title": "CookieRun Classic 쿠키와 펫 콤비",
+          "description": "더 나은 점수를 위해 쿠키 스킬, 펫 능력, 보물 보너스, 릴레이 선택, Power Plus 효과를 비교합니다.",
+          "href": "/combi/cookierun-classic-best-combi"
+        },
+        {
+          "badge": "가이드",
+          "title": "CookieRun Classic 가이드",
+          "description": "더 강한 조합, 더 나은 루트, 고득점 결정을 통해 실시간 리그 레이스를 준비합니다.",
+          "href": "/guide/cookierun-classic-guide"
+        },
+        {
+          "badge": "가이드",
+          "title": "CookieRun Classic 보물",
+          "description": "보물 강화, Supreme Treasure 티켓, 보물이 쿠키와 펫 조합을 어떻게 지원하는지 이해합니다.",
+          "href": "/treasures"
+        },
+        {
+          "badge": "신규",
+          "title": "CookieRun Classic 출시 가이드",
+          "description": "전 세계 출시 보상, 루키 혜택, 코인, 크리스탈, 보물 티켓 보너스를 확인합니다.",
+          "href": "/release/cookierun-classic-release-date"
+        },
+        {
+          "badge": "공식",
+          "title": "CookieRun Classic 다운로드",
+          "description": "글로벌 모바일 버전의 공식 Google Play 및 App Store 출시 페이지를 찾습니다.",
+          "href": "/release/cookierun-classic-global"
+        }
+      ]
+    },
+    "aboutGame": {
+      "title": "CookieRun Classic이란?",
+      "paragraphs": [
+        "CookieRun Classic은 Devsisters가 선보이는 캐주얼 횡스크롤 러너로, 원작 CookieRun 공식을 글로벌 모바일 플레이어에게 다시 가져옵니다. 각 러닝은 점프와 슬라이드 버튼으로 조작하며 젤리를 모으고, 장애물을 피하고, 마녀의 오븐에서 탈출합니다.",
+        "플레이어는 쿠키, 펫, 보물을 수집하고 강화하며, 더 강한 조합을 잠금 해제하고, 테마 에피소드를 탐험하고, 실시간 리그 시스템을 통해 전 세계 러너들과 경쟁할 수 있습니다. 또한 한국 문화와 음식에서 영감을 받은 독점 쿠키와 스토리도 포함되어 있습니다."
+      ],
+      "stats": [
+        {
+          "label": "개발사",
+          "value": "Devsisters"
+        },
+        {
+          "label": "플랫폼",
+          "value": "iOS 및 Android"
+        },
+        {
+          "label": "장르",
+          "value": "캐주얼 엔드리스 러너"
+        },
+        {
+          "label": "글로벌 출시",
+          "value": "2026년 6월 25일"
+        },
+        {
+          "label": "프랜차이즈 도달 규모",
+          "value": "플레이어 3억+"
+        },
+        {
+          "label": "핵심 조작",
+          "value": "점프 및 슬라이드"
+        },
+        {
+          "label": "경쟁 모드",
+          "value": "실시간 리그"
+        }
+      ],
+      "cta": "모든 가이드 둘러보기"
+    },
+    "explore": {
+      "title": "CookieRun Classic 가이드 모듈",
+      "description": "초보자 기본, 출시 보상, 쿠키, 콤비 계획, 보물, 리그 점수, 다운로드 참고 사항, 쿠폰 등록을 위한 주요 CookieRun Classic 가이드 모듈을 둘러보세요.",
+      "readFullGuide": "전체 가이드 읽기",
+      "modules": [
+        {
+          "order": 1,
+          "name": "CookieRun Classic 초보자 가이드",
+          "description": "첫 러닝을 시작하기 전에 필수 조작과 성장 시스템을 배웁니다. 이 가이드는 점프, 슬라이드, 젤리 수집, 장애물 회피, 첫 쿠키 조합 준비를 다룹니다.",
+          "href": "/guide/cookierun-classic-beginner-guide",
+          "displayType": "step-by-step",
+          "highlights": [
+            {
+              "label": "1",
+              "detail": "두 가지 주요 조작을 사용하세요. 점프는 장애물을 넘고, 슬라이드는 위험 요소 아래를 지나갑니다."
+            },
+            {
+              "label": "2",
+              "detail": "각 러닝 중 젤리를 모아 점수를 올립니다."
+            },
+            {
+              "label": "3",
+              "detail": "쿠키가 마녀의 오븐에서 탈출하려는 동안 장애물을 피하고 계속 달립니다."
+            },
+            {
+              "label": "4",
+              "detail": "쿠키와 펫을 수집한 뒤 보물을 강화해 더 강한 러닝 조합을 만듭니다."
+            },
+            {
+              "label": "5",
+              "detail": "준비가 되면 리그에 입장해 전 세계 플레이어와 더 높은 점수를 겨룹니다."
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "name": "CookieRun Classic 출시 보상",
+          "description": "CookieRun Classic 전 세계 출시와 함께 발표된 보상을 확인합니다. 이 자원은 신규 플레이어에게 초반 재화와 보물 티켓을 제공합니다.",
+          "href": "/release/cookierun-classic-release-date",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "크리스탈",
+              "detail": "전 세계 출시 선물에는 크리스탈 300개가 포함됩니다.",
+              "badge": "출시 선물"
+            },
+            {
+              "label": "코인",
+              "detail": "전 세계 출시 선물에는 코인 100,000개가 포함됩니다.",
+              "badge": "출시 선물"
+            },
+            {
+              "label": "티켓",
+              "detail": "전 세계 출시 선물에는 Supreme Treasure 티켓 3장이 포함됩니다.",
+              "badge": "출시 선물"
+            },
+            {
+              "label": "루키",
+              "detail": "신규 플레이어는 특별 로그인 보상, 미션, 이벤트, 초보자 버프를 이용할 수 있습니다."
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "name": "CookieRun Classic 쿠키",
+          "description": "CookieRun Classic에서 수집 가능한 쿠키를 살펴보고 새로 출시된 캐릭터를 따라가세요. 게임에는 한국 문화와 음식에서 영감을 받은 독점 디자인이 포함됩니다.",
+          "href": "/cookies",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "Lotus",
+              "detail": "Pine Monk Cookie의 여행단과 연결된 새 쿠키입니다.",
+              "badge": "신규"
+            },
+            {
+              "label": "Pine",
+              "detail": "신비로운 Lotus Root Phantom Cookie와 Lotus Sitter가 여행단에 합류하는 쿠키입니다."
+            },
+            {
+              "label": "문화",
+              "detail": "CookieRun Classic에는 한국 문화와 한국 음식에서 영감을 받은 독점 쿠키가 등장합니다."
+            },
+            {
+              "label": "수집",
+              "detail": "플레이어는 점수 조합에 사용할 다양한 쿠키를 수집하고 육성할 수 있습니다."
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "name": "CookieRun Classic 리그 가이드",
+          "description": "실시간 경쟁 리그와 일반 연습 러닝과 다른 점수 목표를 이해합니다. 플레이어는 조합을 만들고 가능한 최고 점수를 노리며 전 세계에서 경쟁합니다.",
+          "href": "/guide/cookierun-classic-guide",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "리그",
+              "detail": "리그는 게임의 실시간 경쟁 모드입니다."
+            },
+            {
+              "label": "점수",
+              "detail": "리그의 주요 목표는 가능한 가장 높은 러닝 점수를 달성하는 것입니다."
+            },
+            {
+              "label": "글로벌",
+              "detail": "리그에서는 전 세계 러너들과 경쟁할 수 있습니다."
+            },
+            {
+              "label": "콤보",
+              "detail": "강화한 쿠키, 펫, 보물을 조합한 뒤 더 높은 리그 점수에 도전할 수 있습니다."
+            }
+          ]
+        },
+        {
+          "order": 5,
+          "name": "CookieRun Classic 콤비 계획",
+          "description": "더 강한 러닝을 지원하는 쿠키와 펫 페어링을 살펴보세요. 콤비 계획은 쿠키 스킬, 펫 능력, 릴레이 선택, 보물 강화를 연결합니다.",
+          "href": "/combi/cookierun-classic-best-combi",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "Lotus",
+              "detail": "Lotus Root Phantom Cookie와 함께 출시된 새 동반자입니다.",
+              "badge": "신규"
+            },
+            {
+              "label": "펫",
+              "detail": "플레이어는 펫을 수집하고 좋아하는 쿠키와 짝지을 수 있습니다."
+            },
+            {
+              "label": "페어링",
+              "detail": "쿠키와 펫 선택은 각 러닝 조합의 일부입니다."
+            },
+            {
+              "label": "지원",
+              "detail": "더 강한 점수 조합을 준비할 때 강화한 보물과 함께 펫을 포함할 수 있습니다."
+            }
+          ]
+        },
+        {
+          "order": 6,
+          "name": "CookieRun Classic 보물",
+          "description": "보물이 쿠키와 펫 조합에 어떻게 기여하는지 배웁니다. 보물 강화는 조합을 더 강하게 만드는 공식 방법 중 하나입니다.",
+          "href": "/treasures",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "강화",
+              "detail": "보물은 강화해 러닝 조합의 힘을 높일 수 있습니다."
+            },
+            {
+              "label": "티켓",
+              "detail": "전 세계 출시 선물은 Supreme Treasure 티켓 3장을 제공합니다."
+            },
+            {
+              "label": "콤보",
+              "detail": "보물은 수집한 쿠키와 펫과 함께 사용됩니다."
+            },
+            {
+              "label": "리그",
+              "detail": "더 높은 리그 점수에 도전하기 전 보물 강화를 준비할 수 있습니다."
+            }
+          ]
+        },
+        {
+          "order": 7,
+          "name": "CookieRun Classic 다운로드",
+          "description": "Devsisters가 게시한 검증된 CookieRun Classic 모바일 다운로드 페이지를 찾습니다. 이 게임은 선택형 인앱 구매가 포함된 무료 모바일 타이틀입니다.",
+          "href": "/release/cookierun-classic-global",
+          "displayType": "card-list",
+          "highlights": [
+            {
+              "label": "Android",
+              "detail": "CookieRun Classic은 Devsisters Corporation 명의로 Google Play에서 공식 제공됩니다."
+            },
+            {
+              "label": "iPhone",
+              "detail": "공식 App Store 버전은 iPhone을 지원합니다."
+            },
+            {
+              "label": "iPad",
+              "detail": "공식 App Store 버전은 iPad도 지원합니다."
+            },
+            {
+              "label": "용량",
+              "detail": "초기 iOS App Store 목록에는 다운로드 크기가 약 358.1 MB로 표시됩니다."
+            },
+            {
+              "label": "무료",
+              "detail": "게임은 무료로 다운로드할 수 있으며 선택형 인앱 구매를 포함합니다."
+            }
+          ]
+        },
+        {
+          "order": 8,
+          "name": "CookieRun Classic 쿠폰 등록",
+          "description": "CookieRun Classic 쿠폰 코드를 등록하는 공식 DevPlay 절차를 따르세요. 유효한 DevPlay 계정 이메일 또는 게임 내 Player ID가 필요합니다.",
+          "href": "/codes/cookierun-classic-codes",
+          "displayType": "step-by-step",
+          "highlights": [
+            {
+              "label": "1",
+              "detail": "공식 CookieRun Classic 쿠폰 등록 페이지를 엽니다."
+            },
+            {
+              "label": "2",
+              "detail": "DevPlay 계정에 연결된 이메일 주소를 입력하거나 게임 설정의 Player ID를 입력합니다."
+            },
+            {
+              "label": "3",
+              "detail": "CookieRun Classic 쿠폰 코드를 입력하고 양식을 제출합니다."
+            },
+            {
+              "label": "4",
+              "detail": "쿠폰이 만료되지 않았는지, 코드가 올바르게 입력되었는지 확인합니다."
+            },
+            {
+              "label": "5",
+              "detail": "등록 후 CookieRun Classic을 재시작해 보상을 받습니다."
+            }
+          ]
+        }
+      ]
+    },
+    "faq": {
+      "title": "자주 묻는 질문",
+      "description": "CookieRun Classic에 관한 가장 흔한 질문에 대한 빠른 답변입니다.",
+      "items": [
+        {
+          "question": "CookieRun Classic은 무엇인가요?",
+          "answer": "CookieRun Classic은 Devsisters의 모바일 횡스크롤 러너로, 플레이어가 점프하고 슬라이드하며 젤리를 모으고 장애물을 피하면서 수집 가능한 쿠키, 펫, 보물과 함께 마녀의 오븐을 탈출하는 게임입니다."
+        },
+        {
+          "question": "CookieRun Classic은 모바일에서 이용할 수 있나요?",
+          "answer": "CookieRun Classic은 Apple App Store와 Google Play를 통해 iOS 및 Android에서 이용할 수 있으며, 무료 다운로드와 선택형 인앱 구매를 제공합니다."
+        },
+        {
+          "question": "CookieRun Classic에서 쿠키와 펫 콤보는 어떻게 작동하나요?",
+          "answer": "CookieRun Classic 콤보는 쿠키 스킬, 펫 능력, 보물 강화, 릴레이 선택, Power Plus 효과를 결합해 점수와 자원 러닝을 개선합니다."
+        },
+        {
+          "question": "CookieRun Classic 쿠폰 코드는 어떻게 등록하나요?",
+          "answer": "CookieRun Classic 쿠폰 코드는 공식 DevPlay 쿠폰 페이지에서 DevPlay 계정 이메일 또는 게임 내 Player ID를 입력한 뒤 코드를 제출하고 게임을 재시작해 등록합니다."
+        },
+        {
+          "question": "CookieRun Classic의 리그는 무엇인가요?",
+          "answer": "CookieRun Classic 리그는 플레이어가 강화한 쿠키, 펫, 보물을 준비한 뒤 전 세계에서 더 높은 러닝 점수를 두고 경쟁하는 실시간 경쟁 모드입니다."
+        }
+      ]
+    },
+    "finalCta": {
+      "title": "CookieRun Classic을 마스터할 준비가 되었나요?",
+      "description": "마녀의 오븐에서의 첫 탈출부터 고급 쿠키, 펫, 보물 조합까지, 독립 커뮤니티 위키가 자원 파밍, 점수 향상, 리그 순위 상승을 도와드립니다.",
+      "primary": "초보자 가이드 읽기",
+      "secondary": "CookieRun Classic 플레이"
+    }
+  },
+  "guide": {
+    "overviewTitle": "CookieRun Classic 가이드",
+    "overviewDescription": "CookieRun Classic의 초보자, 성장, 리롤, 스타터 팩, 에피소드, 파티런, 무과금 가이드를 둘러보세요."
+  },
+  "codes": {
+    "overviewTitle": "CookieRun Classic 코드",
+    "overviewDescription": "CookieRun Classic 코드, 등록 참고 사항, DevPlay 요구 사항, 보상 정보, 공개 코드 상태를 확인하세요."
+  },
+  "cookies": {
+    "overviewTitle": "CookieRun Classic 쿠키",
+    "overviewDescription": "쿠키 선택, 초보자 추천, 전설 옵션, 코인 파밍 쿠키, 개별 쿠키 강화 가이드를 비교하세요."
+  },
+  "combi": {
+    "overviewTitle": "CookieRun Classic 콤비",
+    "overviewDescription": "점수, 코인 파밍, Peppermint 러닝, 쿠키 선택, 펫, 보물, 릴레이 계획을 위한 베스트 콤비 구성을 살펴보세요."
+  },
+  "treasures": {
+    "overviewTitle": "CookieRun Classic 보물",
+    "overviewDescription": "보물 뽑기 조언, 최고의 보물, 강화 우선순위, 보물이 CookieRun Classic 러닝을 더 강하게 지원하는 방식을 확인하세요."
+  },
+  "farming": {
+    "overviewTitle": "CookieRun Classic 파밍",
+    "overviewDescription": "효율적인 CookieRun Classic 성장을 위한 코인 파밍 루트, 100k 및 400k 코인 파밍 계획, 자원 구성을 찾으세요."
+  },
+  "release": {
+    "overviewTitle": "CookieRun Classic 출시",
+    "overviewDescription": "글로벌 출시, Android, iOS, 인도 이용 가능 여부, 플랫폼 참고 사항 등 CookieRun Classic 출시 정보를 추적하세요."
+  },
+  "community": {
+    "overviewTitle": "CookieRun Classic 커뮤니티",
+    "overviewDescription": "CookieRun Classic 커뮤니티 링크, 소셜 채널, Facebook 참고 자료, X 업데이트, 게임을 팔로우할 곳을 찾으세요."
+  },
+  "shared": {
+    "wikiNavigation": "위키 탐색",
+    "activeCodes": "활성 코드",
+    "updated": "업데이트됨",
+    "viewAllCodes": "모든 코드 보기",
+    "playOnRoblox": "모바일에서 플레이",
+    "inThisSection": "이 섹션",
+    "tableOfContents": "목차",
+    "nextSteps": "다음 단계",
+    "needHelp": "도움이 필요하신가요?",
+    "relatedReading": "관련 읽을거리",
+    "relatedGuides": "관련 가이드",
+    "readMore": "더 읽기",
+    "officialMedia": "공식 미디어",
+    "home": "홈",
+    "noGuidesAvailable": "아직 이용 가능한 가이드가 없습니다. 곧 다시 확인해 주세요!",
+    "menu": "메뉴",
+    "toggleTheme": "테마 전환"
+  },
+  "footer": {
+    "aboutTitle": "CookieRun Classic Wiki",
+    "about": "CookieRun Classic Wiki는 Devsisters의 글로벌 모바일 러너를 위한 독립 팬메이드 가이드 사이트입니다. 초보자 성장, 쿠키, 펫, 보물, 에피소드, 자원 파밍, 점수 조합, 리그 전략, 이벤트, 검증된 쿠폰 정보를 다룹니다. 이 웹사이트는 Devsisters와 제휴하거나 보증을 받은 사이트가 아닙니다.",
+    "quickLinks": "빠른 링크",
+    "guides": "가이드",
+    "legal": "법적 정보",
+    "copyright": "2026 CookieRun Classic Wiki. Devsisters와 제휴하거나 Devsisters의 보증을 받은 사이트가 아닙니다.",
+    "description": "쿠키, 펫, 보물, 에피소드, 실시간 리그 경쟁이 있는 클래식 모바일 러닝 액션.",
+    "playGame": "CookieRun Classic 플레이",
+    "officialDiscord": "CookieRun 커뮤니티 Discord",
+    "officialYoutube": "공식 DevNow 쇼케이스",
+    "vvBuilder": "공식 쿠폰 등록",
+    "officialX": "공식 X",
+    "officialInstagram": "공식 Instagram",
+    "appStore": "Apple App Store",
+    "beginnerGuide": "초보자 가이드",
+    "raceGuides": "쿠키",
+    "bossGuides": "리그 가이드",
+    "buildGuide": "콤보 가이드",
+    "privacyPolicy": "개인정보 처리방침",
+    "termsOfService": "서비스 약관"
+  }
+}
