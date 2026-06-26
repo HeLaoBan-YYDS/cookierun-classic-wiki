@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight, ExternalLink, Moon, Play, Sun, Menu } from "lucide-react";
+import { ChevronRight, ExternalLink, Menu, Play, X } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { NAVIGATION_CONFIG } from "@/config/navigation";
 import type { NavGroup } from "@/lib/content";
@@ -20,8 +20,8 @@ export async function SiteHeader({ locale }: { locale: string }) {
   const header = (
     <div className="flex items-center justify-between gap-4">
       <Link href={localizeHref("/", locale)} className="flex items-center gap-3">
-        <span className="grid h-9 w-9 place-items-center rounded-xl border border-border bg-muted text-sm font-black text-foreground">VV</span>
-        <span className="text-sm font-bold tracking-wide text-foreground">VV: ULTIMATUM</span>
+        <img src="/android-chrome-192x192.png" alt="" className="h-9 w-9 rounded-xl border border-border bg-muted object-cover" aria-hidden="true" />
+        <span className="text-sm font-bold tracking-wide text-foreground">CookieRun Classic</span>
       </Link>
       <nav className="hidden items-center gap-1 md:flex">
         {NAVIGATION_CONFIG.map((item) => (
@@ -69,11 +69,43 @@ export async function SiteFooter({ locale }: { locale: string }) {
 
 function FooterList({ title, links }: { title: string; links: string[][] }) { return <div><h4 className="font-semibold text-foreground">{title}</h4><ul className="mt-3 space-y-2 text-sm text-muted-foreground">{links.map(([label, href]) => <li key={href}><Link className="hover:text-foreground" href={href}>{label}</Link></li>)}</ul></div>; }
 
-export function TrailerCard({ videoId }: { videoId: string }) {
+function closeTrailerDialog() {
+  const dialog = document.getElementById("trailer-dialog") as HTMLDialogElement | null;
+  const iframe = document.getElementById("trailer-iframe") as HTMLIFrameElement | null;
+  window.removeEventListener("keydown", handleTrailerKeydown);
+  if (iframe) iframe.src = "";
+  if (dialog?.open) dialog.close();
+  dialog?.classList.add("opacity-0", "pointer-events-none");
+  dialog?.classList.remove("opacity-100", "pointer-events-auto");
+}
+
+function handleTrailerKeydown(event: KeyboardEvent) {
+  if (event.key !== "Escape") return;
+  event.preventDefault();
+  closeTrailerDialog();
+}
+
+function openTrailerDialog(videoId: string, startSeconds: number) {
+  const dialog = document.getElementById("trailer-dialog") as HTMLDialogElement | null;
+  const iframe = document.getElementById("trailer-iframe") as HTMLIFrameElement | null;
+  if (!dialog || !iframe) return;
+
+  const params = new URLSearchParams({ autoplay: "1", rel: "0" });
+  if (startSeconds > 0) params.set("start", String(startSeconds));
+  iframe.src = `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
+  if (!dialog.open) dialog.showModal();
+  dialog.focus();
+  window.removeEventListener("keydown", handleTrailerKeydown);
+  window.addEventListener("keydown", handleTrailerKeydown);
+  dialog.classList.remove("opacity-0", "pointer-events-none");
+  dialog.classList.add("opacity-100", "pointer-events-auto");
+}
+
+export function TrailerCard() {
   return (
     <div className="group relative cursor-pointer overflow-hidden rounded-2xl border border-border shadow-lg transition-all duration-200">
       <div className="relative aspect-video w-full">
-        <img src="/images/hero-trailer-thumbnail.jpg" alt="VV: ULTIMATUM Official Trailer" className="size-full object-cover transition-all duration-200 group-hover:brightness-80" />
+        <img src="/images/hero-trailer-thumbnail.jpg" alt="CookieRun Classic Official DevNow Showcase" className="size-full object-cover transition-all duration-200 group-hover:brightness-80" />
       </div>
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="flex size-20 items-center justify-center rounded-full bg-primary/10 backdrop-blur-md transition-transform duration-200 group-hover:scale-105 sm:size-24">
@@ -87,24 +119,48 @@ export function TrailerCard({ videoId }: { videoId: string }) {
   );
 }
 
-export function TrailerDialog({ videoId }: { videoId: string }) {
+export function TrailerDialog() {
   return (
-    <dialog id="trailer-dialog" className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200" onClick={(e) => { const d = document.getElementById("trailer-dialog") as HTMLDialogElement; if (e.target === d) { d.close(); d.classList.add("opacity-0", "pointer-events-none"); d.classList.remove("opacity-100", "pointer-events-auto"); } }}>
-      <div className="relative w-full max-w-4xl mx-4">
-        <iframe id="trailer-iframe" className="aspect-video w-full rounded-xl" allow="autoplay; encrypted-media" allowFullScreen />
-        <button className="absolute -top-10 right-0 text-white/80 hover:text-white text-sm font-medium" onClick={() => { const d = document.getElementById("trailer-dialog") as HTMLDialogElement; d.close(); d.classList.add("opacity-0", "pointer-events-none"); d.classList.remove("opacity-100", "pointer-events-auto"); }}>✕ Close</button>
+    <dialog
+      id="trailer-dialog"
+      tabIndex={-1}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 opacity-0 backdrop-blur-sm transition-opacity duration-200 pointer-events-none"
+      onCancel={(event) => {
+        event.preventDefault();
+        closeTrailerDialog();
+      }}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) closeTrailerDialog();
+      }}
+    >
+      <div className="relative mx-auto w-full max-w-5xl">
+        <iframe
+          id="trailer-iframe"
+          title="CookieRun Classic Official DevNow Showcase"
+          className="aspect-video w-full rounded-xl bg-black"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+        />
+        <button
+          type="button"
+          className="absolute right-3 top-3 z-20 inline-flex size-10 items-center justify-center rounded-full bg-black/75 text-white shadow-lg transition-colors hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          onClick={closeTrailerDialog}
+        >
+          <X className="size-5" />
+          <span className="sr-only">Close trailer</span>
+        </button>
       </div>
     </dialog>
   );
 }
 
-export function TrailerButton({ videoId }: { videoId: string }) {
+export function TrailerButton({ videoId, startSeconds = 0 }: { videoId: string; startSeconds?: number }) {
   return (
     <>
-      <button type="button" className="w-full" aria-haspopup="dialog" onClick={() => { const d = document.getElementById("trailer-dialog") as HTMLDialogElement; const f = document.getElementById("trailer-iframe") as HTMLIFrameElement; f.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`; d.showModal(); d.classList.remove("opacity-0", "pointer-events-none"); d.classList.add("opacity-100", "pointer-events-auto"); }}>
-        <TrailerCard videoId={videoId} />
+      <button type="button" className="w-full" aria-haspopup="dialog" onClick={() => openTrailerDialog(videoId, startSeconds)}>
+        <TrailerCard />
       </button>
-      <TrailerDialog videoId={videoId} />
+      <TrailerDialog />
     </>
   );
 }
