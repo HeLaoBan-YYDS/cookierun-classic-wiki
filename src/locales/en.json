@@ -6,7 +6,16 @@
     "description": "CookieRun Classic Wiki covers beginner tips, coin farming, Cookie and Pet combos, Treasure upgrades, episode guides, League scoring, events, and verified codes.",
     "legalNotice": "Independent fan-made CookieRun Classic community wiki. Not affiliated with or endorsed by Devsisters."
   },
-  "nav": {},
+  "nav": {
+    "guide": "Guide",
+    "codes": "Codes",
+    "cookies": "Cookies",
+    "combi": "Combi",
+    "treasures": "Treasures",
+    "farming": "Farming",
+    "release": "Release",
+    "community": "Community"
+  },
   "home": {
     "meta": {
       "title": "CookieRun Classic Wiki — Guides, Codes & Best Combos",
@@ -413,7 +422,38 @@
       "secondary": "Play CookieRun Classic"
     }
   },
-  "bosses": {},
+  "guide": {
+    "overviewTitle": "CookieRun Classic Guides",
+    "overviewDescription": "Browse beginner, progression, reroll, starter pack, episode, party run, and free-to-play guides for CookieRun Classic."
+  },
+  "codes": {
+    "overviewTitle": "CookieRun Classic Codes",
+    "overviewDescription": "Check CookieRun Classic codes, redemption notes, DevPlay requirements, reward details, and public code status."
+  },
+  "cookies": {
+    "overviewTitle": "CookieRun Classic Cookies",
+    "overviewDescription": "Compare Cookie choices, beginner picks, legendary options, coin farming Cookies, and individual Cookie upgrade guides."
+  },
+  "combi": {
+    "overviewTitle": "CookieRun Classic Combi",
+    "overviewDescription": "Explore best combi setups for scoring, coin farming, Peppermint runs, Cookie choices, Pets, Treasures, and relay planning."
+  },
+  "treasures": {
+    "overviewTitle": "CookieRun Classic Treasures",
+    "overviewDescription": "Review Treasure draw advice, best Treasures, upgrade priorities, and how Treasures support stronger CookieRun Classic runs."
+  },
+  "farming": {
+    "overviewTitle": "CookieRun Classic Farming",
+    "overviewDescription": "Find coin farming routes, 100k and 400k coin farm plans, and resource setups for efficient CookieRun Classic progression."
+  },
+  "release": {
+    "overviewTitle": "CookieRun Classic Release",
+    "overviewDescription": "Track CookieRun Classic release information for global launch, Android, iOS, India availability, and platform notes."
+  },
+  "community": {
+    "overviewTitle": "CookieRun Classic Community",
+    "overviewDescription": "Find CookieRun Classic community links, social channels, Facebook references, X updates, and places to follow the game."
+  },
   "shared": {
     "wikiNavigation": "Wiki Navigation",
     "activeCodes": "Active Codes",
@@ -429,7 +469,9 @@
     "readMore": "Read more",
     "officialMedia": "Official media",
     "home": "Home",
-    "noGuidesAvailable": "No guides available yet. Check back soon!"
+    "noGuidesAvailable": "No guides available yet. Check back soon!",
+    "menu": "Menu",
+    "toggleTheme": "Toggle theme"
   },
   "footer": {
     "aboutTitle": "CookieRun Classic Wiki",

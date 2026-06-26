@@ -7,7 +7,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cookierun-classic-wiki.wiki";
 
   // Static paths that always exist
-  const staticPaths = ["/", ...CONTENT_TYPES.map((contentType) => `/${contentType}`), "/privacy-policy", "/terms-of-service", "/copyright", "/about"];
+  const staticPaths = [
+    "/",
+    "/guide",
+    "/codes",
+    "/cookies",
+    "/combi",
+    "/treasures",
+    "/farming",
+    "/release",
+    "/community",
+    "/privacy-policy",
+    "/terms-of-service",
+    "/copyright",
+    "/about",
+  ];
 
   // Dynamic paths: scan actual MDX content files
   const contentPaths = await getAllContentPaths("en");
