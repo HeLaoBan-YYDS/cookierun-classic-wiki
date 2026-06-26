@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO 审计报告 — CookieRun Classic Wiki</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card: #161a22;
+    --card-2: #1c2230;
+    --border: #28303d;
+    --text: #e6edf3;
+    --muted: #9aa6b2;
+    --accent: #5b9dff;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --orange: #db6d28;
+    --red: #f85149;
+    --purple: #a371f7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.6;
+    font-size: 15px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+  header.hero {
+    background: linear-gradient(135deg, #1a2030 0%, #0f1115 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    margin-bottom: 28px;
+  }
+  h1 { margin: 0 0 8px; font-size: 28px; }
+  h2 { margin: 36px 0 12px; font-size: 22px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  h3 { margin: 24px 0 8px; font-size: 17px; color: var(--accent); }
+  h4 { margin: 16px 0 6px; font-size: 15px; }
+  p { margin: 8px 0; color: var(--text); }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 8px; }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .b-critical { background: rgba(248,81,73,.15); color: var(--red); border: 1px solid rgba(248,81,73,.3); }
+  .b-high     { background: rgba(219,109,40,.15); color: var(--orange); border: 1px solid rgba(219,109,40,.3); }
+  .b-medium   { background: rgba(210,153,34,.15); color: var(--yellow); border: 1px solid rgba(210,153,34,.3); }
+  .b-low      { background: rgba(163,113,247,.15); color: var(--purple); border: 1px solid rgba(163,113,247,.3); }
+  .b-pass     { background: rgba(63,185,80,.15); color: var(--green); border: 1px solid rgba(63,185,80,.3); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .stat-card .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+  .stat-card .value { font-size: 24px; font-weight: 700; margin-top: 4px; }
+  .stat-card .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+
+  .score-wrap {
+    display: flex; align-items: center; gap: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 12px 0 24px;
+  }
+  .score-circle {
+    width: 84px; height: 84px; border-radius: 50%;
+    background: conic-gradient(var(--yellow) 0% 68%, rgba(255,255,255,.08) 68% 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 700;
+  }
+  .score-circle span {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .issue {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 12px 0;
+  }
+  .issue.critical { border-left-color: var(--red); }
+  .issue.high     { border-left-color: var(--orange); }
+  .issue.medium   { border-left-color: var(--yellow); }
+  .issue.low      { border-left-color: var(--purple); }
+  .issue.pass     { border-left-color: var(--green); }
+  .issue .title { font-weight: 600; margin-bottom: 4px; }
+  .issue .row { display: flex; gap: 8px; align-items: flex-start; margin: 4px 0; }
+  .issue .row .k { color: var(--muted); min-width: 70px; font-size: 13px; }
+  .issue .row .v { flex: 1; }
+  code, pre {
+    background: #0a0c10;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 13px;
+    color: #c9d1d9;
+  }
+  pre { padding: 12px; overflow-x: auto; }
+  .toc {
+    background: var(--card-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 22px;
+    margin-bottom: 24px;
+  }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ul { margin: 4px 0; padding-left: 22px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  th { background: var(--card-2); color: var(--muted); font-weight: 600; }
+  tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+  }
+  .ok { color: var(--green); }
+  .bad { color: var(--red); }
+  .warn { color: var(--yellow); }
+  ul.checklist { padding-left: 22px; }
+  ul.checklist li { margin: 4px 0; }
+  .pill {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    background: rgba(91,157,255,.15);
+    color: var(--accent);
+    border: 1px solid rgba(91,157,255,.3);
+    margin-right: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <h1>SEO 审计报告</h1>
+    <div class="meta">
+      站点：<code>http://localhost:3000/</code> &nbsp;|&nbsp;
+      框架：Next.js 15.3.7 + next-intl v4 + TailwindCSS &nbsp;|&nbsp;
+      审计日期：2026-06-26 &nbsp;|&nbsp;
+      审计范围：技术 SEO、On-Page SEO、国际化、性能、结构化数据
+    </div>
+    <div class="meta">
+      站点类型：多语言内容 / Wiki 站点（en / th / ko / ja）&nbsp;|&nbsp;
+      主要业务目标：在 CookieRun Classic 关键词上获得自然搜索流量
+    </div>
+  </header>
+
+  <div class="score-wrap">
+    <div class="score-circle"><span>68</span></div>
+    <div>
+      <div style="font-size:18px;font-weight:600;">整体 SEO 健康度：<span class="warn">68 / 100（中等）</span></div>
+      <div style="color:var(--muted);margin-top:6px;">
+        站点已具备良好的 SEO 基础（多语言 hreflang、JSON-LD 结构化数据、sitemap、canonical 等），
+        但存在若干<span class="bad">关键问题</span>会严重影响索引与排名：
+        默认站点 URL 是占位符域名、根路径 308 重定向逻辑错误、未启用 Next/Image 优化、自动语言检测可能误导爬虫等。
+      </div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <strong>目录</strong>
+    <ul>
+      <li><a href="#summary">1. 执行摘要与优先级问题</a></li>
+      <li><a href="#tech">2. 技术 SEO 审计</a></li>
+      <li><a href="#i18n">3. 国际化（hreflang / 多语言）审计</a></li>
+      <li><a href="#onpage">4. On-Page SEO 审计</a></li>
+      <li><a href="#perf">5. 性能与 Core Web Vitals</a></li>
+      <li><a href="#content">6. 内容质量与 E-E-A-T</a></li>
+      <li><a href="#action">7. 优先级行动计划</a></li>
+    </ul>
+  </div>
+
+  <h2 id="summary">1. 执行摘要与优先级问题</h2>
+
+  <h3>Top 5 优先级问题</h3>
+  <div class="grid">
+    <div class="stat-card">
+      <div class="label">关键问题 #1</div>
+      <div class="value" style="color:var(--red);font-size:16px;line-height:1.3;">站点 URL 使用占位符</div>
+      <div class="sub">默认值 <code>cookierun-classic-wiki.wiki</code> 在所有 canonical、hreflang、sitemap、JSON-LD 中使用，需要 <code>NEXT_PUBLIC_SITE_URL</code></div>
+    </div>
+    <div class="stat-card">
+      <div class="label">关键问题 #2</div>
+      <div class="value" style="color:var(--red);font-size:16px;line-height:1.3;">根路径 308 重定向错误</div>
+      <div class="sub"><code>app/page.tsx</code> 写死 <code>redirect("/en")</code>，与 <code>localePrefix:"as-needed"</code> 冲突</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">关键问题 #3</div>
+      <div class="value" style="color:var(--orange);font-size:16px;line-height:1.3;">Accept-Language 自动重定向</div>
+      <div class="sub"><code>localeDetection:true</code> 会让 Googlebot 行为不可预测，且与 IP 协商冲突</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">关键问题 #4</div>
+      <div class="value" style="color:var(--orange);font-size:16px;line-height:1.3;">Next/Image 优化禁用</div>
+      <div class="sub"><code>images.unoptimized:true</code>，无 WebP 转换、无 srcset、无 lazy 默认</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">关键问题 #5</div>
+      <div class="value" style="color:var(--yellow);font-size:16px;line-height:1.3;">首页缺少 FAQPage schema</div>
+      <div class="sub">页面渲染了 FAQ Accordion，但未输出 FAQPage 结构化数据，丢失 rich snippet 机会</div>
+    </div>
+  </div>
+
+  <h3>快速胜利清单（Quick Wins）</h3>
+  <ul class="checklist">
+    <li>✅ 设置生产环境 <code>NEXT_PUBLIC_SITE_URL</code> 环境变量（10 分钟）</li>
+    <li>✅ 删除 <code>src/app/page.tsx</code> 中的 <code>redirect("/en")</code> 死代码（5 分钟）</li>
+    <li>✅ 把 <code>routing.localeDetection</code> 改为 <code>false</code>（5 分钟）</li>
+    <li>✅ 在 <code>app/[locale]/layout.tsx</code> 显式添加 <code>robots: { index: true, follow: true }</code>（5 分钟）</li>
+    <li>✅ 为首页 FAQ 区域添加 <code>FAQPage</code> JSON-LD（30 分钟）</li>
+    <li>✅ 在外部官方链接添加 <code>rel="noopener noreferrer"</code> 与 <code>referrerpolicy</code>（10 分钟）</li>
+  </ul>
+
+  <h2 id="tech">2. 技术 SEO 审计</h2>
+
+  <h3>2.1 抓取与索引（Crawlability & Indexation）</h3>
+
+  <div class="issue pass">
+    <div class="title">robots.txt 配置正确</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span></span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>src/app/robots.ts</code> 允许 <code>userAgent:"*"</code> 全站抓取，并引用 sitemap。</span></div>
+  </div>
+
+  <div class="issue pass">
+    <div class="title">XML Sitemap 已实现且包含 hreflang alternates</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span></span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>src/app/sitemap.ts</code> 使用 <code>alternates.languages</code> 输出 4 个 locale + x-default，覆盖静态与动态路径。</span></div>
+  </div>
+
+  <div class="issue medium">
+    <div class="title">sitemap 中 lastModified 永远是"今天"</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-medium">中</span>Google 可能逐渐降低对 lastModified 的信任度</span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>lastModified: new Date()</code>，每次请求都生成当前时间。</span></div>
+    <div class="row"><span class="k">建议</span><span class="v">从 MDX frontmatter 读取真实的 <code>date</code> / <code>lastModified</code>，静态路径用文件 mtime。</span></div>
+  </div>
+
+  <div class="issue high">
+    <div class="title">sitemap 与 HTML hreflang 中根 URL 尾斜杠不一致</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-high">高</span>可能导致 Google 把 <code>/</code> 与 <code>""</code> 视为两个 URL</span></div>
+    <div class="row"><span class="k">证据</span><span class="v">
+      sitemap.ts 中 <code>url = ${'$'}{siteUrl}${'$'}{locale === "en" ? "" : ...}</code> 生成 <code>https://cookierun-classic-wiki.wiki</code>（无尾斜杠）；
+      而渲染出的 HTML hreflang <code>x-default</code> 为 <code>https://cookierun-classic-wiki.wiki/</code>（有尾斜杠）。
+    </span></div>
+    <div class="row"><span class="k">建议</span><span class="v">统一尾斜杠策略：在 <code>next.config.mjs</code> 显式设置 <code>trailingSlash: false</code> 或 <code>true</code>，并在 sitemap 与 canonical 中保持一致。</span></div>
+  </div>
+
+  <h3>2.2 站点速度与 Core Web Vitals</h3>
+
+  <div class="issue pass">
+    <div class="title">CLS（累积布局偏移）优秀</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span> 测得 CLS = 0.0000</span></div>
+    <div class="row"><span class="k">说明</span><span class="v">远低于 0.1 的阈值，说明页面布局稳定。</span></div>
+  </div>
+
+  <div class="issue medium">
+    <div class="title">TTFB 偏高（开发模式）</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-medium">中</span>首页 TTFB = 786ms，文章页 = 496ms</span></div>
+    <div class="row"><span class="k">说明</span><span class="v">当前为 dev 模式（含 HMR、未压缩），生产环境 <code>next build &amp;&amp; next start</code> 后应大幅下降。建议生产目标 &lt; 200ms。</span></div>
+  </div>
+
+  <div class="issue high">
+    <div class="title">Next/Image 优化被全局禁用</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-high">高</span>LCP / 图片加载性能下降，丢失 WebP / AVIF 自动转换、responsive srcset、默认 lazy loading</span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>next.config.mjs</code> 中 <code>images: { unoptimized: true }</code>。页面测得 <code>imgLazy: 0</code>（0 张图启用 lazy）、<code>imgWithWidthHeight: 0</code>（0 张图有 width/height）。</span></div>
+    <div class="row"><span class="k">建议</span><span class="v">
+      <ul style="margin:6px 0 0 16px;">
+        <li>在 Netlify 上启用 Next Image Optimization（Netlify 默认支持）</li>
+        <li>移除 <code>unoptimized: true</code>，改用 <code>&lt;Image /&gt;</code> 组件</li>
+        <li>为装饰性图片添加 <code>priority</code> 仅用于 LCP 元素</li>
+      </ul>
+    </span></div>
+  </div>
+
+  <h3>2.3 移动端友好性</h3>
+  <div class="issue pass">
+    <div class="title">viewport 配置正确</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span> <code>width=device-width, initial-scale=1</code></span></div>
+    <div class="row"><span class="k">说明</span><span class="v">采用 TailwindCSS 响应式断点（sm/md/lg），不是独立的 m. 站点，符合移动优先索引要求。</span></div>
+  </div>
+
+  <h3>2.4 HTTPS 与安全</h3>
+  <div class="issue pass">
+    <div class="title">所有绝对 URL 均使用 HTTPS</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span></span></div>
+    <div class="row"><span class="k">说明</span><span class="v">canonical、hreflang、JSON-LD、外链均使用 https:// 协议，无 mixed content 风险。</span></div>
+  </div>
+
+  <div class="issue medium">
+    <div class="title">未配置 HSTS / 安全响应头</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-medium">中</span>未配置 <code>Strict-Transport-Security</code>、<code>X-Content-Type-Options</code>、<code>Content-Security-Policy</code></span></div>
+    <div class="row"><span class="k">建议</span><span class="v">在 <code>next.config.mjs</code> 的 <code>headers()</code> 函数或 Netlify <code>_headers</code> 文件中添加安全响应头。</span></div>
+  </div>
+
+  <h3>2.5 URL 结构</h3>
+  <div class="issue pass">
+    <div class="title">URL 结构清晰、语义化</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span></span></div>
+    <div class="row"><span class="k">示例</span><span class="v"><code>/guide/cookierun-classic-beginner-guide</code>、<code>/th/cookies/cookierun-classic-best-cookies</code> —— 全小写、连字符分隔、含目标关键词。</span></div>
+  </div>
+
+  <h2 id="i18n">3. 国际化（hreflang / 多语言）审计</h2>
+
+  <div class="issue pass">
+    <div class="title">hreflang 标签结构完整</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span></span></div>
+    <div class="row"><span class="k">证据</span><span class="v">渲染输出 5 个 hreflang：<code>en</code>、<code>th</code>、<code>ko</code>、<code>ja</code>、<code>x-default</code>，包含自引用（en 指向 /，th 指向 /th）和 x-default。</span></div>
+  </div>
+
+  <div class="issue pass">
+    <div class="title">语言代码使用 ISO 639-1 标准格式</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span> <code>en/th/ko/ja</code> 均为合法语言代码</span></div>
+  </div>
+
+  <div class="issue pass">
+    <div class="title">每个 locale URL 自引用 canonical</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span></span></div>
+    <div class="row"><span class="k">说明</span><span class="v">/th/guide/... 的 canonical 指向 <code>/th/guide/...</code>，无跨 locale canonical 问题。</span></div>
+  </div>
+
+  <div class="issue critical">
+    <div class="title">Accept-Language 自动检测会误导 Googlebot</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-critical">严重</span>页面行为不可预测，可能被错误重定向</span></div>
+    <div class="row"><span class="k">证据</span><span class="v">
+      <code>src/i18n/routing.ts</code> 设置 <code>localeDetection: true</code>。审计过程中用 Chrome 访问 <code>/</code> 时被自动重定向到 <code>/th</code>，而访问 <code>/en</code> 时被重定向到 <code>/</code>。
+      Googlebot 不发送 Accept-Language 头，但其他爬虫与 CDN 缓存可能因此缓存错误的语言版本。
+    </span></div>
+    <div class="row"><span class="k">建议</span><span class="v">将 <code>localeDetection</code> 改为 <code>false</code>，仅依赖 hreflang 与显式语言切换器。</span></div>
+  </div>
+
+  <div class="issue critical">
+    <div class="title">根路径 <code>/</code> 的重定向逻辑冲突</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-critical">严重</span>潜在的重定向循环 / 死代码</span></div>
+    <div class="row"><span class="k">证据</span><span class="v">
+      <code>src/app/page.tsx</code> 写死 <code>redirect("/en")</code>，但 <code>routing.ts</code> 配置 <code>localePrefix: "as-needed"</code>（en 不带前缀）。
+      实际访问 <code>/en</code> 会被 next-intl 中间件重定向到 <code>/</code>，若此中间件失效则形成循环：<code>/</code> → <code>/en</code> → <code>/</code>。
+    </span></div>
+    <div class="row"><span class="k">建议</span><span class="v">删除 <code>src/app/page.tsx</code>，让根路径 <code>/</code> 直接由 <code>[locale]</code> 路由处理（en 为默认 locale，无前缀）。</span></div>
+  </div>
+
+  <div class="issue medium">
+    <div class="title">缺少 <code>meta http-equiv="content-language"</code></div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-medium">中</span>Bing 把 hreflang 视为弱信号，依赖 <code>&lt;html lang&gt;</code> 与 <code>content-language</code></span></div>
+    <div class="row"><span class="k">说明</span><span class="v">已有 <code>&lt;html lang="th"&gt;</code>，建议补充 <code>&lt;meta http-equiv="content-language" content="th"&gt;</code>（每个 locale 随之变化）。</span></div>
+  </div>
+
+  <div class="issue low">
+    <div class="title">sitemap 未按 locale / 内容类型分割</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-low">低</span>当前 URL 数量较少，无性能问题</span></div>
+    <div class="row"><span class="k">建议</span><span class="v">未来内容超过 5,000 URL 时拆分为 sitemap index + 子 sitemap（按 locale 或 content type 拆分）。</span></div>
+  </div>
+
+  <h2 id="onpage">4. On-Page SEO 审计</h2>
+
+  <h3>4.1 标题与元描述</h3>
+
+  <h4>首页（<code>/</code>）</h4>
+  <table>
+    <tr><th>项目</th><th>内容</th><th>长度</th><th>评价</th></tr>
+    <tr><td>Title</td><td>CookieRun Classic Wiki — Guides, Codes &amp; Best Combos</td><td>51 字符</td><td class="ok">优秀（&lt; 60）</td></tr>
+    <tr><td>Meta Description</td><td>CookieRun Classic Wiki covers beginner tips, coin farming, Cookie and Pet combos, Treasure upgrades, episode guides, League scoring, events, and verified codes.</td><td>157 字符</td><td class="ok">优秀（150-160）</td></tr>
+    <tr><td>H1</td><td>CookieRun Classic Wiki</td><td>—</td><td class="ok">唯一 H1</td></tr>
+    <tr><td>og:title / og:description</td><td>已配置</td><td>—</td><td class="ok">通过</td></tr>
+    <tr><td>twitter:card</td><td>summary_large_image</td><td>—</td><td class="ok">通过</td></tr>
+  </table>
+
+  <h4>文章页（<code>/th/guide/cookierun-classic-beginner-guide</code>）</h4>
+  <table>
+    <tr><th>项目</th><th>评价</th></tr>
+    <tr><td>Title</td><td class="ok">已本地化为泰语，包含目标关键词</td></tr>
+    <tr><td>Meta Description</td><td class="ok">已本地化，与正文一致</td></tr>
+    <tr><td>H1</td><td class="ok">唯一 H1，包含主关键词</td></tr>
+    <tr><td>og:type</td><td class="ok">article（正确）</td></tr>
+  </table>
+
+  <h3>4.2 标题层级（Heading Structure）</h3>
+  <div class="issue low">
+    <div class="title">H3 标签数量过多</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-low">低</span>首页 92 个 H3，文章页 17 个 H3</span></div>
+    <div class="row"><span class="k">说明</span><span class="v">HomePageClient 中 "explore.modules" 的每个模块标题使用 H3，但 8 个模块 × 多个 highlights 标签可能不必要。建议把模块标题保留 H3，把 highlights 降级为 <code>&lt;strong&gt;</code> 或 <code>&lt;p class="font-bold"&gt;</code>。</span></div>
+  </div>
+
+  <h3>4.3 图片优化</h3>
+  <div class="issue medium">
+    <div class="title">图片缺少 width / height 属性</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-medium">中</span>潜在 CLS 风险（虽然当前测得 CLS=0）</span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>imgWithWidthHeight: 0</code>（0/2 张图有尺寸属性）</span></div>
+    <div class="row"><span class="k">建议</span><span class="v">改用 <code>next/image</code> 组件会自动注入 width/height；或在 <code>&lt;img&gt;</code> 上显式添加。</span></div>
+  </div>
+
+  <div class="issue medium">
+    <div class="title">未启用 lazy loading</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-medium">中</span>首屏外图片立即下载，浪费带宽</span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>imgLazy: 0</code>（0 张图启用 <code>loading="lazy"</code>）</span></div>
+    <div class="row"><span class="k">建议</span><span class="v">为非首屏图片（如侧栏 logo、trailer 缩略图）添加 <code>loading="lazy"</code>。</span></div>
+  </div>
+
+  <div class="issue low">
+    <div class="title">logo 图片 alt 为空字符串</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-low">低</span>装饰性图片 alt="" 是合规处理，但 logo 建议有 alt</span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>site.tsx</code> 第 24 行 <code>&lt;img src="/android-chrome-192x192.png" alt="" ... aria-hidden="true" /&gt;</code></span></div>
+    <div class="row"><span class="k">建议</span><span class="v">改为 <code>alt="CookieRun Classic Wiki logo"</code> 并移除 <code>aria-hidden</code>。</span></div>
+  </div>
+
+  <h3>4.4 内部链接</h3>
+  <div class="issue pass">
+    <div class="title">内链密度合理</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span></span></div>
+    <div class="row"><span class="k">数据</span><span class="v">首页 118 个内链，文章页 34 个内链 —— 重要页面（首页 / 分类页 / 文章页）相互链接充分。</span></div>
+  </div>
+
+  <div class="issue medium">
+    <div class="title">404 页面链接未本地化</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-medium">中</span>非 en locale 用户从 404 跳到 <code>/guide</code>（en 默认）</span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>src/app/[locale]/not-found.tsx</code> 第 10 行 <code>&lt;Link href="/guide"&gt;Browse Guides&lt;/Link&gt;</code> 写死英文 + 未本地化。</span></div>
+    <div class="row"><span class="k">建议</span><span class="v">用 <code>localizeHref</code> 包裹并从 messages 读取文案。</span></div>
+  </div>
+
+  <div class="issue low">
+    <div class="title">外部官方链接缺少 rel 属性</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-low">低</span>给官方站点传递 link equity</span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>site.tsx</code> footer 中 Google Play / App Store / X / Instagram / Discord / YouTube 链接均无 <code>rel</code> 属性。</span></div>
+    <div class="row"><span class="k">建议</span><span class="v">添加 <code>rel="noopener noreferrer"</code>（target="_blank" 时），考虑 <code>rel="sponsored noopener"</code> 用于合作链接。</span></div>
+  </div>
+
+  <h3>4.5 关键词对齐</h3>
+  <div class="issue pass">
+    <div class="title">title / H1 / URL 关键词一致</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span></span></div>
+    <div class="row"><span class="k">示例</span><span class="v">
+      URL: <code>/guide/cookierun-classic-beginner-guide</code><br>
+      H1: "พิชิตเตาอบ: สุดยอดคู่มือ CookieRun Classic สำหรับมือใหม่..."（含 "CookieRun Classic" + "คู่มือ...มือใหม่" / beginner guide）<br>
+      Title: 同 H1
+    </span></div>
+  </div>
+
+  <h2 id="perf">5. 性能与 Core Web Vitals</h2>
+
+  <h3>实测数据（Playwright / Chrome DevTools）</h3>
+
+  <h4>首页 <code>/</code></h4>
+  <table>
+    <tr><th>指标</th><th>实测值</th><th>目标</th><th>评价</th></tr>
+    <tr><td>TTFB</td><td>786 ms</td><td>&lt; 200 ms</td><td class="warn">dev 模式偏高，生产预计达标</td></tr>
+    <tr><td>First Contentful Paint</td><td>912 ms</td><td>&lt; 1800 ms</td><td class="ok">通过</td></tr>
+    <tr><td>LCP</td><td>null（未触发）</td><td>&lt; 2500 ms</td><td class="warn">需要再测</td></tr>
+    <tr><td>CLS</td><td>0.0000</td><td>&lt; 0.1</td><td class="ok">优秀</td></tr>
+    <tr><td>loadEvent</td><td>1108 ms</td><td>—</td><td class="ok">合理</td></tr>
+    <tr><td>DOM 节点数</td><td>1312</td><td>&lt; 1500</td><td class="ok">通过</td></tr>
+    <tr><td>HTML 大小</td><td>414 KB</td><td>&lt; 200 KB</td><td class="warn">dev 模式含 HMR，生产预计更小</td></tr>
+    <tr><td>JS transfer</td><td>3042 KB</td><td>&lt; 300 KB</td><td class="bad">dev 未压缩，生产需验证</td></tr>
+    <tr><td>资源数</td><td>11</td><td>—</td><td class="ok">合理</td></tr>
+  </table>
+
+  <h4>文章页 <code>/th/guide/cookierun-classic-beginner-guide</code></h4>
+  <table>
+    <tr><th>指标</th><th>实测值</th><th>评价</th></tr>
+    <tr><td>TTFB</td><td>496 ms</td><td class="ok">较好</td></tr>
+    <tr><td>FCP</td><td>572 ms</td><td class="ok">通过</td></tr>
+    <tr><td>CLS</td><td>0.0000</td><td class="ok">优秀</td></tr>
+    <tr><td>loadEvent</td><td>823 ms</td><td class="ok">合理</td></tr>
+    <tr><td>正文词数</td><td>731 字</td><td class="ok">文章深度合格</td></tr>
+  </table>
+
+  <div class="issue medium">
+    <div class="title">建议使用 Lighthouse / PageSpeed Insights 在生产环境复测</div>
+    <div class="row"><span class="k">说明</span><span class="v">当前为本地 dev 模式，数据不能反映真实用户体验。建议部署后用 <code>https://pagespeed.web.dev/</code> 跑一次，关注 LCP / INP / TBT。</span></div>
+  </div>
+
+  <h2 id="content">6. 内容质量与 E-E-A-T</h2>
+
+  <h3>6.1 结构化数据（Schema.org / JSON-LD）</h3>
+
+  <div class="issue pass">
+    <div class="title">已部署 Organization、WebSite、Article、BreadcrumbList、ItemList</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span></span></div>
+    <div class="row"><span class="k">证据</span><span class="v">
+      首页：Organization + WebSite<br>
+      文章页：Article + BreadcrumbList + Organization<br>
+      列表页：ItemList
+    </span></div>
+  </div>
+
+  <div class="issue medium">
+    <div class="title">首页 FAQ 缺少 FAQPage schema</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-medium">中</span>丢失 FAQ rich snippet 机会</span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>HomePageClient.tsx</code> 第 238 行渲染 <code>&lt;Accordion&gt;</code> FAQ，但未输出对应 JSON-LD。</span></div>
+    <div class="row"><span class="k">建议</span><span class="v">在 <code>app/[locale]/page.tsx</code> 添加 FAQPage schema，含 home.faq.items 的 question/answer。</span></div>
+  </div>
+
+  <div class="issue low">
+    <div class="title">Article schema 缺少 author URL / publisher sameAs</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-low">低</span>E-E-A-T 信号略弱</span></div>
+    <div class="row"><span class="k">建议</span><span class="v">在 Organization 中添加 <code>sameAs</code> 数组引用官方 X / Instagram / Discord；Article.author 改为带 <code>url</code> 的对象。</span></div>
+  </div>
+
+  <h3>6.2 内容深度</h3>
+  <div class="issue pass">
+    <div class="title">文章内容深度合理</div>
+    <div class="row"><span class="k">数据</span><span class="v">首页正文 ~3775 字，文章页 ~731 字。每篇文章含表格、列表、H2/H3 分层、相关文章推荐。</span></div>
+  </div>
+
+  <div class="issue low">
+    <div class="title">"暂无兑换码" 硬编码中文</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-low">低</span>非中文 locale 页面出现中文，影响信任度</span></div>
+    <div class="row"><span class="k">证据</span><span class="v"><code>site.tsx</code> 第 63 行 <code>&lt;code&gt;暂无兑换码&lt;/code&gt;</code> 在 en/th/ko/ja 页面均显示中文。</span></div>
+    <div class="row"><span class="k">建议</span><span class="v">提取到 messages，使用 <code>t("noCodesAvailable")</code>。</span></div>
+  </div>
+
+  <h3>6.3 信任度（Trustworthiness）</h3>
+  <div class="issue pass">
+    <div class="title">法律页面齐全</div>
+    <div class="row"><span class="k">状态</span><span class="v"><span class="badge b-pass">通过</span> 含 Privacy Policy / Terms of Service / Copyright / About</span></div>
+  </div>
+
+  <div class="issue medium">
+    <div class="title">缺少 Cookie 同意横幅</div>
+    <div class="row"><span class="k">影响</span><span class="v"><span class="badge b-medium">中</span>若服务欧盟 / 英国 / 加州用户，需要 GDPR / CCPA 合规</span></div>
+    <div class="row"><span class="k">说明</span><span class="v"><code>privacy-policy</code> 提到 "Basic analytics, advertising, and hosting providers may process..."，但没有实际同意机制。</span></div>
+  </div>
+
+  <h2 id="action">7. 优先级行动计划</h2>
+
+  <h3>P0 — 严重阻塞（立即修复）</h3>
+  <ol>
+    <li><strong>设置 <code>NEXT_PUBLIC_SITE_URL</code> 环境变量</strong><br>
+    影响：所有 canonical / hreflang / sitemap / JSON-LD 当前指向占位符 <code>cookierun-classic-wiki.wiki</code>。<br>
+    操作：在 Netlify / 部署平台环境变量中设置真实域名。
+    </li>
+    <li><strong>删除 <code>src/app/page.tsx</code> 的 <code>redirect("/en")</code></strong><br>
+    影响：与 <code>localePrefix:"as-needed"</code> 冲突，存在死代码 / 潜在循环重定向风险。<br>
+    操作：整个文件可删除（让 [locale] 路由处理根路径）。
+    </li>
+    <li><strong>将 <code>localeDetection</code> 改为 <code>false</code></strong><br>
+    影响：避免 Accept-Language 重定向对爬虫与 CDN 缓存造成不可预测行为。<br>
+    操作：编辑 <code>src/i18n/routing.ts</code>。
+    </li>
+  </ol>
+
+  <h3>P1 — 高影响改进（本周内）</h3>
+  <ol>
+    <li><strong>启用 Next/Image 优化</strong>：移除 <code>images.unoptimized: true</code>，把 <code>&lt;img&gt;</code> 替换为 <code>next/image</code>。</li>
+    <li><strong>统一尾斜杠策略</strong>：在 <code>next.config.mjs</code> 设置 <code>trailingSlash</code>，让 sitemap 与 canonical 一致。</li>
+    <li><strong>首页添加 FAQPage JSON-LD</strong>：在 <code>app/[locale]/page.tsx</code> 输出结构化数据。</li>
+    <li><strong>404 页面本地化</strong>：用 <code>localizeHref</code> 包裹链接并使用 messages。</li>
+    <li><strong>修复"暂无兑换码"中文硬编码</strong>：迁移到 messages 文件。</li>
+  </ol>
+
+  <h3>P2 — 中等改进（本月内）</h3>
+  <ol>
+    <li><strong>添加安全响应头</strong>：HSTS、X-Content-Type-Options、CSP。</li>
+    <li><strong>添加 <code>meta http-equiv="content-language"</code></strong>：服务 Bing 等弱信号搜索引擎。</li>
+    <li><strong>为图片添加 width/height 与 <code>loading="lazy"</code></strong>。</li>
+    <li><strong>外部链接加 <code>rel="noopener noreferrer"</code></strong>。</li>
+    <li><strong>sitemap 中使用真实 lastModified</strong>：从 MDX frontmatter 读取。</li>
+    <li><strong>Organization schema 添加 sameAs</strong>：链接到官方社交账号。</li>
+    <li><strong>部署后用 Lighthouse / PageSpeed Insights 复测</strong>：重点验证 LCP &lt; 2.5s、INP &lt; 200ms。</li>
+  </ol>
+
+  <h3>P3 — 长期优化（按需）</h3>
+  <ol>
+    <li>实现 sitemap index 拆分（按 locale / content type）当 URL 数量超过 5,000 时。</li>
+    <li>添加 Cookie 同意横幅（若服务欧盟 / 加州）。</li>
+    <li>减少首页 H3 数量，把 highlights 降级为非标题元素。</li>
+    <li>考虑添加 BreadcrumbList schema 到首页（非必需）。</li>
+    <li>监控 Search Console 的 Core Web Vitals 报告与索引覆盖报告。</li>
+  </ol>
+
+  <h3>已通过项一览</h3>
+  <div class="grid">
+    <div class="stat-card"><div class="label">技术 SEO</div>
+      <ul style="margin:6px 0 0 16px;font-size:13px;">
+        <li>✅ robots.txt 配置</li>
+        <li>✅ XML sitemap 含 hreflang</li>
+        <li>✅ 移动 viewport</li>
+        <li>✅ HTTPS 全站</li>
+        <li>✅ URL 结构语义化</li>
+      </ul>
+    </div>
+    <div class="stat-card"><div class="label">On-Page</div>
+      <ul style="margin:6px 0 0 16px;font-size:13px;">
+        <li>✅ Title / Description 长度</li>
+        <li>✅ H1 唯一</li>
+        <li>✅ 关键词对齐</li>
+        <li>✅ 内链密度</li>
+        <li>✅ Open Graph / Twitter Card</li>
+      </ul>
+    </div>
+    <div class="stat-card"><div class="label">国际化</div>
+      <ul style="margin:6px 0 0 16px;font-size:13px;">
+        <li>✅ hreflang 含 x-default</li>
+        <li>✅ hreflang 自引用</li>
+        <li>✅ 合法语言代码</li>
+        <li>✅ 子目录 URL 结构</li>
+        <li>✅ 自引用 canonical</li>
+      </ul>
+    </div>
+    <div class="stat-card"><div class="label">性能</div>
+      <ul style="margin:6px 0 0 16px;font-size:13px;">
+        <li>✅ CLS = 0</li>
+        <li>✅ FCP &lt; 1s</li>
+        <li>✅ DOM 节点合理</li>
+        <li>✅ 资源数少</li>
+      </ul>
+    </div>
+    <div class="stat-card"><div class="label">内容 / E-E-A-T</div>
+      <ul style="margin:6px 0 0 16px;font-size:13px;">
+        <li>✅ Organization schema</li>
+        <li>✅ Article schema</li>
+        <li>✅ BreadcrumbList schema</li>
+        <li>✅ 法律页面齐全</li>
+        <li>✅ 多语言内容完整</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    报告由 seo-audit skill 生成 &nbsp;|&nbsp; 审计方法：Playwright 实测 + 源码静态分析 &nbsp;|&nbsp; 2026-06-26
+  </div>
+
+</div>
+</body>
+</html>

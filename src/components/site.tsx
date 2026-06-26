@@ -59,13 +59,14 @@ export function Breadcrumbs({ items }: { items: { label: string; href?: string }
 export async function WikiSidebar({ locale, navGroups, currentPath }: { locale: string; navGroups: NavGroup[]; currentPath?: string }) {
   const t = await getTranslations({ locale, namespace: "shared" });
   const isActive = (href: string) => currentPath === href;
-  return <aside className="space-y-6 lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:pr-1"><section className="rounded-2xl border border-border bg-card/60 p-5 shadow-sm"><h3 className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">{t("wikiNavigation")}</h3><div className="space-y-4">{navGroups.map((group) => <CollapsibleNavGroup key={group.slug} title={group.title} icon={<span className="grid h-4 w-4 place-items-center rounded text-[10px] font-bold text-[hsl(var(--nav-theme))]">{group.title[0]}</span>} count={group.count} currentPath={currentPath}><ul className="space-y-1">{group.links.map((link) => <li key={link.href}><Link href={localizeHref(link.href, locale)} className={`flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition-colors ${isActive(link.href) ? "bg-[hsl(var(--nav-theme)/0.15)] font-semibold text-[hsl(var(--nav-theme))]" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}><span className="truncate">{link.label}</span>{link.badge && <Badge variant="secondary" className="ml-auto h-5 border-border px-1.5 text-[10px]">{link.badge}</Badge>}</Link></li>)}</ul></CollapsibleNavGroup>)}</div></section><section className="rounded-2xl border border-border bg-card/60 p-5"><h3 className="mb-3 text-sm font-bold text-foreground">{t("activeCodes")}</h3><div className="space-y-3 text-sm"><div className="rounded-xl bg-muted p-3"><code className="font-bold text-foreground">暂无兑换码</code><p className="mt-1 text-muted-foreground">No verified active public CookieRun Classic code yet.</p></div><div className="rounded-xl bg-muted p-3"><code className="font-bold text-foreground">暂无兑换码</code><p className="mt-1 text-muted-foreground">No second verified active public code yet.</p></div><Link href={localizeHref("/codes", locale)} className="inline-flex items-center gap-1 text-sm font-semibold text-[hsl(var(--nav-theme))]">{t("viewAllCodes")} <ChevronRight className="h-4 w-4" /></Link></div></section></aside>;
+  const isGroupActive = (group: NavGroup) => Boolean(currentPath && group.links.some((link) => currentPath === link.href || currentPath.startsWith(`${link.href}/`)));
+  return <aside className="space-y-6 lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:pr-1"><section className="rounded-2xl border border-border bg-card/60 p-5 shadow-sm"><h3 className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">{t("wikiNavigation")}</h3><div className="space-y-4">{navGroups.map((group) => <CollapsibleNavGroup key={group.slug} title={group.title} icon={<span className="grid h-4 w-4 place-items-center rounded text-[10px] font-bold text-[hsl(var(--nav-theme))]">{group.title[0]}</span>} count={group.count} defaultOpen={isGroupActive(group)}><ul className="space-y-1">{group.links.map((link) => <li key={link.href}><Link href={localizeHref(link.href, locale)} className={`flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition-colors ${isActive(link.href) ? "bg-[hsl(var(--nav-theme)/0.15)] font-semibold text-[hsl(var(--nav-theme))]" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}><span className="truncate">{link.label}</span>{link.badge && <Badge variant="secondary" className="ml-auto h-5 border-border px-1.5 text-[10px]">{link.badge}</Badge>}</Link></li>)}</ul></CollapsibleNavGroup>)}</div></section><section className="rounded-2xl border border-border bg-card/60 p-5"><h3 className="mb-3 text-sm font-bold text-foreground">{t("activeCodes")}</h3><div className="space-y-3 text-sm"><div className="rounded-xl bg-muted p-3"><code className="font-bold text-foreground">暂无兑换码</code><p className="mt-1 text-muted-foreground">No verified active public CookieRun Classic code yet.</p></div><div className="rounded-xl bg-muted p-3"><code className="font-bold text-foreground">暂无兑换码</code><p className="mt-1 text-muted-foreground">No second verified active public code yet.</p></div><Link href={localizeHref("/codes", locale)} className="inline-flex items-center gap-1 text-sm font-semibold text-[hsl(var(--nav-theme))]">{t("viewAllCodes")} <ChevronRight className="h-4 w-4" /></Link></div></section></aside>;
 }
 
 export async function SiteFooter({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "footer" });
   const site = await getTranslations({ locale, namespace: "site" });
-  return <footer className="mt-16 border-t border-border bg-card/30"><div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"><div className="mb-10 rounded-2xl border border-border bg-muted/40 p-5"><div className="font-bold text-foreground">CookieRun Classic</div><p className="mt-1 text-sm text-muted-foreground">{t("description")}</p><Link href="https://play.google.com/store/apps/details?id=com.devsisters.crg" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[hsl(var(--nav-theme))]">{t("playGame")} <ExternalLink className="h-4 w-4" /></Link></div><p className="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">{site("legalNotice")}</p><div className="grid gap-8 md:grid-cols-4"><div className="md:col-span-2"><h3 className="font-bold text-foreground">{t("aboutTitle")}</h3><p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">{t("about")}</p></div><FooterList locale={locale} title={t("quickLinks")} links={[[t("playGame"), "https://play.google.com/store/apps/details?id=com.devsisters.crg"], [t("appStore"), "https://apps.apple.com/us/app/cookierun-classic/id6759596824"], [t("officialX"), "https://x.com/CRClassicEN"], [t("officialInstagram"), "https://www.instagram.com/crclassic_en"], [t("officialDiscord"), "https://discord.com/invite/cookierun"], [t("officialYoutube"), "https://www.youtube.com/watch?v=QECwBKhHj3k&t=2814s"], [t("vvBuilder"), "https://coupon.devplay.com/coupon/crg/en"]]} /><FooterList locale={locale} title={t("guides")} links={[[t("beginnerGuide"), "/guide/cookierun-classic-beginner-guide"], [t("raceGuides"), "/cookies"], [t("bossGuides"), "/guide/cookierun-classic-guide"], [t("buildGuide"), "/combi/cookierun-classic-best-combi"], [t("privacyPolicy"), "/privacy-policy"], [t("termsOfService"), "/terms-of-service"]]} /></div><p className="mt-10 border-t border-border pt-6 text-xs text-muted-foreground">{t("copyright")}</p></div></footer>;
+  return <footer className="mt-16 border-t border-border bg-card/30"><div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"><div className="mb-10 rounded-2xl border border-border bg-muted/40 p-5"><div className="font-bold text-foreground">CookieRun Classic</div><p className="mt-1 text-sm text-muted-foreground">{t("description")}</p><Link href="https://play.google.com/store/apps/details?id=com.devsisters.crg" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[hsl(var(--nav-theme))]">{t("playGame")} <ExternalLink className="h-4 w-4" /></Link></div><p className="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">{site("legalNotice")}</p><div className="grid gap-8 md:grid-cols-4"><div className="md:col-span-2"><h3 className="font-bold text-foreground">{t("aboutTitle")}</h3><p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">{t("about")}</p></div><FooterList locale={locale} title={t("quickLinks")} links={[[t("playGame"), "https://play.google.com/store/apps/details?id=com.devsisters.crg"], [t("appStore"), "https://apps.apple.com/us/app/cookierun-classic/id6759596824"], [t("officialX"), "https://x.com/CRClassicEN"], [t("officialInstagram"), "https://www.instagram.com/crclassic_en"], [t("officialDiscord"), "https://discord.com/invite/cookierun"], [t("officialYoutube"), "https://www.youtube.com/watch?v=QECwBKhHj3k&t=2585s"], [t("vvBuilder"), "https://coupon.devplay.com/coupon/crg/en"]]} /><FooterList locale={locale} title={t("guides")} links={[[t("beginnerGuide"), "/guide/cookierun-classic-beginner-guide"], [t("raceGuides"), "/cookies"], [t("bossGuides"), "/guide/cookierun-classic-guide"], [t("buildGuide"), "/combi/cookierun-classic-best-combi"], [t("privacyPolicy"), "/privacy-policy"], [t("termsOfService"), "/terms-of-service"]]} /></div><p className="mt-10 border-t border-border pt-6 text-xs text-muted-foreground">{t("copyright")}</p></div></footer>;
 }
 
 function FooterList({ locale, title, links }: { locale: string; title: string; links: string[][] }) { return <div><h4 className="font-semibold text-foreground">{title}</h4><ul className="mt-3 space-y-2 text-sm text-muted-foreground">{links.map(([label, href]) => <li key={href}><Link className="hover:text-foreground" href={href.startsWith("/") ? localizeHref(href, locale) : href}>{label}</Link></li>)}</ul></div>; }
@@ -86,13 +87,14 @@ function handleTrailerKeydown(event: KeyboardEvent) {
   closeTrailerDialog();
 }
 
-function openTrailerDialog(videoId: string, startSeconds: number) {
+function openTrailerDialog(videoId: string, startSeconds: number, endSeconds?: number) {
   const dialog = document.getElementById("trailer-dialog") as HTMLDialogElement | null;
   const iframe = document.getElementById("trailer-iframe") as HTMLIFrameElement | null;
   if (!dialog || !iframe) return;
 
   const params = new URLSearchParams({ autoplay: "1", rel: "0" });
   if (startSeconds > 0) params.set("start", String(startSeconds));
+  if (endSeconds && endSeconds > startSeconds) params.set("end", String(endSeconds));
   if (window.location.origin) params.set("origin", window.location.origin);
   iframe.src = `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
   if (!dialog.open) dialog.showModal();
@@ -126,7 +128,7 @@ export function TrailerDialog() {
     <dialog
       id="trailer-dialog"
       tabIndex={-1}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 opacity-0 backdrop-blur-sm transition-opacity duration-200 pointer-events-none"
+      className="fixed inset-0 z-[100] flex h-full w-full max-h-none max-w-none items-center justify-center bg-black/80 p-4 opacity-0 backdrop-blur-sm transition-opacity duration-200 pointer-events-none"
       onCancel={(event) => {
         event.preventDefault();
         closeTrailerDialog();
@@ -135,7 +137,7 @@ export function TrailerDialog() {
         if (event.target === event.currentTarget) closeTrailerDialog();
       }}
     >
-      <div className="relative mx-auto w-full max-w-5xl">
+      <div className="relative mx-auto w-full max-w-6xl">
         <iframe
           id="trailer-iframe"
           title="CookieRun Classic Official DevNow Showcase"
@@ -156,10 +158,10 @@ export function TrailerDialog() {
   );
 }
 
-export function TrailerButton({ videoId, startSeconds = 0 }: { videoId: string; startSeconds?: number }) {
+export function TrailerButton({ videoId, startSeconds = 0, endSeconds }: { videoId: string; startSeconds?: number; endSeconds?: number }) {
   return (
     <>
-      <button type="button" className="w-full" aria-haspopup="dialog" onClick={() => openTrailerDialog(videoId, startSeconds)}>
+      <button type="button" className="w-full" aria-haspopup="dialog" onClick={() => openTrailerDialog(videoId, startSeconds, endSeconds)}>
         <TrailerCard />
       </button>
       <TrailerDialog />

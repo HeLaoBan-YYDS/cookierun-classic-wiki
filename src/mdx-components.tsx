@@ -1,14 +1,17 @@
 import Link from "next/link";
+import { isValidElement, type ReactNode } from "react";
+import { slug as slugHeading } from "github-slugger";
 import type { MDXComponents } from "mdx/types";
 
-function toHeadingId(children: React.ReactNode): string {
-  const text = String(children).replace(/<[^>]*>/g, "").trim();
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
+function getNodeText(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(getNodeText).join("");
+  if (isValidElement<{ children?: ReactNode }>(node)) return getNodeText(node.props.children);
+  return "";
+}
+
+function toHeadingId(children: ReactNode): string {
+  return slugHeading(getNodeText(children).trim()) || "section";
 }
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -29,7 +32,7 @@ const defaultComponents: MDXComponents = {
   },
   h3: ({ children, id }) => {
     const headingId = id || toHeadingId(children);
-    return <h3 id={headingId} className="mt-8 text-xl font-semibold text-foreground">{children}</h3>;
+    return <h3 id={headingId} className="mt-8 scroll-m-20 text-xl font-semibold text-foreground">{children}</h3>;
   },
   p: ({ children }) => <p className="my-5 leading-8 text-muted-foreground">{children}</p>,
   ul: ({ children }) => <ul className="my-5 ml-5 list-disc space-y-2 text-muted-foreground marker:text-[hsl(var(--nav-theme))]">{children}</ul>,

@@ -1,7 +1,12 @@
 import fs from "fs";
 import path from "path";
+import GithubSlugger from "github-slugger";
 import { CONTENT_TYPES as CONFIG_CONTENT_TYPES } from "@/config/navigation";
 import { routing, type Locale } from "@/i18n/routing";
+import enMessages from "@/locales/en.json";
+import jaMessages from "@/locales/ja.json";
+import koMessages from "@/locales/ko.json";
+import thMessages from "@/locales/th.json";
 
 // 从统一配置导入内容类型
 export const CONTENT_TYPES = CONFIG_CONTENT_TYPES;
@@ -88,22 +93,27 @@ const CONTENT_ROOT = path.join(process.cwd(), "content");
  */
 function extractHeadings(mdxSource: string): Heading[] {
   const headings: Heading[] = [];
+  const slugger = new GithubSlugger();
   const lines = mdxSource.split("\n");
   for (const line of lines) {
     const match = line.match(/^(#{2,3})\s+(.+)/);
     if (match) {
       const level = match[1].length;
-      const text = match[2].replace(/\{[^}]*\}/g, "").trim();
-      const id = text
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-")
-        .replace(/^-|-$/g, "");
+      const text = getPlainHeadingText(match[2]);
+      const id = slugger.slug(text);
       headings.push({ id, text, level });
     }
   }
   return headings;
+}
+
+function getPlainHeadingText(rawText: string): string {
+  return rawText
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/<[^>]*>/g, "")
+    .replace(/\{[^}]*\}/g, "")
+    .replace(/[`*_~]/g, "")
+    .trim();
 }
 
 /**
@@ -248,10 +258,20 @@ const GROUP_TITLES: Record<string, string> = {
 };
 
 // locale → 分组标题映射
-const GROUP_TITLES_BY_LOCALE: Record<string, Record<string, string>> = {};
+const NAV_LABELS_BY_LOCALE: Record<Locale, Record<string, string>> = {
+  en: enMessages.nav,
+  ja: jaMessages.nav,
+  ko: koMessages.nav,
+  th: thMessages.nav,
+};
 
 // locale → "Overview" 翻译
-const OVERVIEW_LABEL_BY_LOCALE: Record<string, string> = {};
+const OVERVIEW_LABEL_BY_LOCALE: Record<Locale, string> = {
+  en: enMessages.shared.overview,
+  ja: jaMessages.shared.overview,
+  ko: koMessages.shared.overview,
+  th: thMessages.shared.overview,
+};
 
 // 分组排序顺序
 const GROUP_ORDER: string[] = [
@@ -282,7 +302,7 @@ export function getDynamicNavigation(language: Locale = "en"): NavGroup[] {
 
     const links: NavGroup["links"] = [];
     // 添加 Overview 入口（按 locale 翻译）
-    const overviewLabel = OVERVIEW_LABEL_BY_LOCALE[language] || "Overview";
+    const overviewLabel = OVERVIEW_LABEL_BY_LOCALE[language] || OVERVIEW_LABEL_BY_LOCALE.en;
     links.push({ label: overviewLabel, href: `/${groupSlug}` });
 
     for (const segments of slugPaths) {
@@ -310,7 +330,7 @@ export function getDynamicNavigation(language: Locale = "en"): NavGroup[] {
     }
 
     // 优先使用 locale 特定标题，否则回退到英文默认
-    const localTitles = GROUP_TITLES_BY_LOCALE[language] || {};
+    const localTitles = NAV_LABELS_BY_LOCALE[language] || NAV_LABELS_BY_LOCALE.en;
     const groupTitle = localTitles[groupSlug] || GROUP_TITLES[groupSlug] || groupSlug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
     groups.push({

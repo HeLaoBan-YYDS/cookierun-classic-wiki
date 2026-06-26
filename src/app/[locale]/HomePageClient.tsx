@@ -17,7 +17,8 @@ const icons: LucideIcon[] = [BookOpen, Shield, Compass, Boxes, Flame, Code2, Swo
 
 export default function HomePageClient({ home, locale, articles, recentArticles }: { home: Home; locale: string; articles: ContentItem[]; recentArticles: ContentItem[] }) {
   const YOUTUBE_VIDEO_ID = "QECwBKhHj3k";
-  const YOUTUBE_START_SECONDS = 2814;
+  const YOUTUBE_START_SECONDS = 2585;
+  const YOUTUBE_END_SECONDS = 2814;
   const BEGINNER_GUIDE_HREF = "/guide/cookierun-classic-beginner-guide";
   const COMBO_GUIDE_HREF = "/combi/cookierun-classic-best-combi";
   const CODES_HREF = "/codes";
@@ -41,7 +42,7 @@ export default function HomePageClient({ home, locale, articles, recentArticles 
       </section>
 
       <section className="mx-auto w-full max-w-5xl">
-        <TrailerButton videoId={YOUTUBE_VIDEO_ID} startSeconds={YOUTUBE_START_SECONDS} />
+        <TrailerButton videoId={YOUTUBE_VIDEO_ID} startSeconds={YOUTUBE_START_SECONDS} endSeconds={YOUTUBE_END_SECONDS} />
       </section>
 
       {/* 最近更新 + 新手教程 两栏布局 */}
