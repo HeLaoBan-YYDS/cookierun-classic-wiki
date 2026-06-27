@@ -6,6 +6,7 @@ import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { ThemeProvider } from "next-themes";
+import { TopNavAdsterraBanner } from "@/components/ads/top-nav-adsterra-banner";
 import { JsonLd, SiteFooter, SiteHeader } from "@/components/site";
 import { routing } from "@/i18n/routing";
 
@@ -70,6 +71,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <NextIntlClientProvider messages={messages}>
             <JsonLd data={organization} />
             <SiteHeader locale={locale} />
+            <TopNavAdsterraBanner />
             {children}
             <SiteFooter locale={locale} />
           </NextIntlClientProvider>

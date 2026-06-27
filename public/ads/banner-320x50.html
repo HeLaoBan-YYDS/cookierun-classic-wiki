@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=320, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <style>
+      html,
+      body {
+        width: 320px;
+        height: 50px;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var adsterraKey = (new URLSearchParams(window.location.search).get("key") || "").trim();
+      var atOptions = {
+        "key": adsterraKey,
+        "format": "iframe",
+        "height": 50,
+        "width": 320,
+        "params": {}
+      };
+
+      if (adsterraKey) {
+        document.write('<script type="text/javascript" src="//www.highperformanceformat.com/' + adsterraKey + '/invoke.js"><\/script>');
+      }
+    </script>
+  </body>
+</html>
