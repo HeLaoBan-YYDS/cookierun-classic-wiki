@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bea6a923-81f0-4487-95c6-51fed8751e13" name="Changes" comment="步骤五">
+    <list default="true" id="bea6a923-81f0-4487-95c6-51fed8751e13" name="Changes" comment="上线部署">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[locale]/HomePageClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/HomePageClient.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[locale]/[...slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/[...slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[locale]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[locale]/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/sitemap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/sitemap.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/site.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/site.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/locales/ja.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/ja.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/locales/ko.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/ko.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/locales/th.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/locales/th.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +24,7 @@
 }]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/libin257/vvultimatum_sbs.git",
+    "url": "https://github.com/HeLaoBan-YYDS/cookierun-classic-wiki.git",
     "accountId": "0eba093a-f2da-45d3-8e7c-d58b4e47d42b"
   }
 }]]></component>
@@ -51,6 +43,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JavaScript Debug.seo-audit-report.html.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
@@ -104,7 +97,7 @@
       <option name="presentableId" value="Default" />
       <updated>1782181932330</updated>
       <workItem from="1782181933450" duration="2000" />
-      <workItem from="1782442937210" duration="6748000" />
+      <workItem from="1782442937210" duration="12987000" />
     </task>
     <task id="LOCAL-00001" summary="初始化">
       <option name="closed" value="true" />
@@ -154,7 +147,23 @@
       <option name="project" value="LOCAL" />
       <updated>1782449598112</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="步骤六和七">
+      <option name="closed" value="true" />
+      <created>1782453318056</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1782453318056</updated>
+    </task>
+    <task id="LOCAL-00008" summary="上线部署">
+      <option name="closed" value="true" />
+      <created>1782470724673</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1782470724673</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +176,8 @@
     <MESSAGE value="步骤三" />
     <MESSAGE value="步骤四" />
     <MESSAGE value="步骤五" />
-    <option name="LAST_COMMIT_MESSAGE" value="步骤五" />
+    <MESSAGE value="步骤六和七" />
+    <MESSAGE value="上线部署" />
+    <option name="LAST_COMMIT_MESSAGE" value="上线部署" />
   </component>
 </project>
