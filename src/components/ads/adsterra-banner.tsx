@@ -1,3 +1,12 @@
+"use client";
+
+import { useState, type SyntheticEvent } from "react";
+import { X } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+const AD_IFRAME_SANDBOX = "allow-scripts allow-popups";
+
 type AdsterraBannerSlotConfig = {
   key: string;
   width: number;
@@ -44,23 +53,194 @@ export const ADSTERRA_BANNER_SLOTS = {
   },
 } satisfies Record<string, AdsterraBannerSlotConfig>;
 
+const adBannerTypes = {
+  "banner-320x50": ADSTERRA_BANNER_SLOTS["banner-320x50"],
+  "banner-160x300": ADSTERRA_BANNER_SLOTS["banner-160x300"],
+  "banner-160x600": ADSTERRA_BANNER_SLOTS["banner-160x600"],
+} as const;
+
+export type AdBannerType = keyof typeof adBannerTypes;
 export type AdsterraBannerSlot = keyof typeof ADSTERRA_BANNER_SLOTS;
 
-export function AdsterraBanner({ slot }: { slot: AdsterraBannerSlot }) {
-  const ad = ADSTERRA_BANNER_SLOTS[slot];
+type AdBannerProps = {
+  type: AdBannerType;
+  adKey?: string;
+  dismissible?: boolean;
+  eager?: boolean;
+  className?: string;
+  title?: string;
+};
 
-  if (!ad.key.trim()) return null;
+export const adsterraBannerPlacements = {
+  "160x300": ADSTERRA_BANNER_SLOTS["banner-160x300"],
+  "160x600": ADSTERRA_BANNER_SLOTS["banner-160x600"],
+  "300x250": ADSTERRA_BANNER_SLOTS["banner-300x250"],
+  "320x50": ADSTERRA_BANNER_SLOTS["banner-320x50"],
+  "468x60": ADSTERRA_BANNER_SLOTS["banner-468x60"],
+  "728x90": ADSTERRA_BANNER_SLOTS["banner-728x90"],
+} as const;
+
+export type AdsterraBannerPlacement = keyof typeof adsterraBannerPlacements;
+
+type AdsterraBannerProps = {
+  placement: AdsterraBannerPlacement;
+  dismissible?: boolean;
+  className?: string;
+  title?: string;
+};
+
+function getAdsterraSrcDoc(adKey: string, width: number, height: number) {
+  const serializedKey = JSON.stringify(adKey).replace(/</g, "\\u003c");
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=${width},height=${height},initial-scale=1" />
+    <style>
+      html,
+      body {
+        width: ${width}px;
+        height: ${height}px;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      const adsterraKey = ${serializedKey};
+      const adsterraWidth = ${width};
+      const adsterraHeight = ${height};
+
+      if (adsterraKey) {
+        var atOptions = {
+          key: adsterraKey,
+          format: "iframe",
+          height: adsterraHeight,
+          width: adsterraWidth,
+          params: {}
+        };
+
+        const invokeScript = document.createElement("script");
+        invokeScript.type = "text/javascript";
+        invokeScript.src =
+          "https://www.highperformanceformat.com/" + adsterraKey + "/invoke.js";
+        document.body.appendChild(invokeScript);
+      }
+    </script>
+  </body>
+</html>`;
+}
+
+export function AdBanner({
+  type,
+  adKey,
+  dismissible = false,
+  eager = false,
+  className,
+  title = "Advertisement",
+}: AdBannerProps) {
+  const [dismissed, setDismissed] = useState(false);
+  const key = adKey?.trim();
+  const ad = adBannerTypes[type];
+  const closeAd = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setDismissed(true);
+  };
+
+  if (!key || dismissed) {
+    return null;
+  }
 
   return (
-    <div className="flex w-full justify-center">
-      <iframe
-        src={ad.src}
-        title={`Adsterra ${slot}`}
-        width={ad.width}
-        height={ad.height}
-        scrolling="no"
-        style={{ border: "none" }}
-      />
+    <div className={cn("flex w-full items-center justify-center", className)}>
+      <div className="relative w-fit">
+        <iframe
+          height={ad.height}
+          loading={eager ? "eager" : "lazy"}
+          referrerPolicy="strict-origin-when-cross-origin"
+          sandbox={AD_IFRAME_SANDBOX}
+          scrolling="no"
+          srcDoc={getAdsterraSrcDoc(key, ad.width, ad.height)}
+          style={{
+            border: "none",
+            display: "block",
+            height: ad.height,
+            overflow: "hidden",
+            width: ad.width,
+          }}
+          title={title}
+          width={ad.width}
+        />
+        {dismissible && (
+          <button
+            type="button"
+            aria-label="Close advertisement"
+            className="absolute right-1 top-1 z-50 grid size-5 cursor-pointer place-items-center rounded-sm bg-transparent text-foreground drop-shadow transition-colors hover:bg-background/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            onClick={closeAd}
+            onPointerDown={closeAd}
+          >
+            <X className="size-3" aria-hidden="true" />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function AdsterraBanner({
+  placement,
+  dismissible = false,
+  className,
+  title = "Advertisement",
+}: AdsterraBannerProps) {
+  const [dismissed, setDismissed] = useState(false);
+  const ad = adsterraBannerPlacements[placement];
+  const closeAd = (event: SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setDismissed(true);
+  };
+
+  if (!ad.key.trim() || dismissed) {
+    return null;
+  }
+
+  return (
+    <div className={cn("flex w-full items-center justify-center", className)}>
+      <div className="relative w-fit">
+        <iframe
+          height={ad.height}
+          referrerPolicy="strict-origin-when-cross-origin"
+          sandbox={AD_IFRAME_SANDBOX}
+          scrolling="no"
+          src={ad.src}
+          style={{
+            border: "none",
+            display: "block",
+            height: ad.height,
+            overflow: "hidden",
+            width: ad.width,
+          }}
+          title={title}
+          width={ad.width}
+        />
+        {dismissible && (
+          <button
+            type="button"
+            aria-label="Close advertisement"
+            className="absolute right-1 top-1 z-50 grid size-5 cursor-pointer place-items-center rounded-sm bg-transparent text-foreground drop-shadow transition-colors hover:bg-background/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            onClick={closeAd}
+            onPointerDown={closeAd}
+          >
+            <X className="size-3" aria-hidden="true" />
+          </button>
+        )}
+      </div>
     </div>
   );
 }

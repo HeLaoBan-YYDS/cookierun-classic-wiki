@@ -6,13 +6,24 @@ import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { ThemeProvider } from "next-themes";
-import { TopNavAdsterraBanner } from "@/components/ads/top-nav-adsterra-banner";
+import { StickySidebarAd } from "@/components/ads/sticky-sidebar-ad";
+import { StickyTopAd } from "@/components/ads/sticky-top-ad";
 import { JsonLd, SiteFooter, SiteHeader } from "@/components/site";
 import { routing } from "@/i18n/routing";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cookierun-classic-wiki.wiki";
+const stickyTopAdKey = process.env.NEXT_PUBLIC_AD_MOBILE_320X50?.trim();
+const stickySidebarAdKey = process.env.NEXT_PUBLIC_AD_SIDEBAR_160X600?.trim();
+const stickyRightSidebarAdKey = process.env.NEXT_PUBLIC_AD_SIDEBAR_160X300?.trim();
+const contentAdOffsetClassName =
+  [
+    stickySidebarAdKey ? "lg:pl-[152px] 2xl:pl-0" : "",
+    stickyRightSidebarAdKey ? "lg:pr-[176px] 2xl:pr-0" : "",
+  ]
+    .filter(Boolean)
+    .join(" ") || undefined;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -71,9 +82,13 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <NextIntlClientProvider messages={messages}>
             <JsonLd data={organization} />
             <SiteHeader locale={locale} />
-            <TopNavAdsterraBanner />
-            {children}
-            <SiteFooter locale={locale} />
+            <StickyTopAd type="banner-320x50" adKey={stickyTopAdKey} eager />
+            <StickySidebarAd placement="left-sidebar" type="banner-160x600" adKey={stickySidebarAdKey} eager />
+            <StickySidebarAd placement="right-sidebar" type="banner-160x300" adKey={stickyRightSidebarAdKey} eager />
+            <div className={contentAdOffsetClassName}>
+              {children}
+              <SiteFooter locale={locale} />
+            </div>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
