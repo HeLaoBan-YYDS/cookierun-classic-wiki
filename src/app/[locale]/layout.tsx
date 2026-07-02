@@ -38,6 +38,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: "CookieRun Classic Wiki covers beginner tips, coin farming, Cookie and Pet combos, Treasure upgrades, episode guides, League scoring, events, and verified codes.",
     openGraph: { type: "website", locale, url: siteUrl, siteName: "CookieRun Classic Wiki", images: [{ url: image }] },
     twitter: { card: "summary_large_image", images: [image] },
+    other: {
+      "google-adsense-account": "ca-pub-9990396895505565",
+    },
   };
 }
 
@@ -57,6 +60,13 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <html lang={locale} className={`${inter.variable}`} suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+        <Script
+          id="google-adsense"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9990396895505565"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-3EBWSL5NWC"
           strategy="afterInteractive"
