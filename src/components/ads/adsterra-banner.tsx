@@ -5,8 +5,6 @@ import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-const AD_IFRAME_SANDBOX = "allow-scripts allow-popups";
-
 type AdsterraBannerSlotConfig = {
   key: string;
   width: number;
@@ -89,50 +87,8 @@ type AdsterraBannerProps = {
   title?: string;
 };
 
-function getAdsterraSrcDoc(adKey: string, width: number, height: number) {
-  const serializedKey = JSON.stringify(adKey).replace(/</g, "\\u003c");
-
-  return `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=${width},height=${height},initial-scale=1" />
-    <style>
-      html,
-      body {
-        width: ${width}px;
-        height: ${height}px;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background: transparent;
-      }
-    </style>
-  </head>
-  <body>
-    <script type="text/javascript">
-      const adsterraKey = ${serializedKey};
-      const adsterraWidth = ${width};
-      const adsterraHeight = ${height};
-
-      if (adsterraKey) {
-        var atOptions = {
-          key: adsterraKey,
-          format: "iframe",
-          height: adsterraHeight,
-          width: adsterraWidth,
-          params: {}
-        };
-
-        const invokeScript = document.createElement("script");
-        invokeScript.type = "text/javascript";
-        invokeScript.src =
-          "https://www.highperformanceformat.com/" + adsterraKey + "/invoke.js";
-        document.body.appendChild(invokeScript);
-      }
-    </script>
-  </body>
-</html>`;
+function getAdsterraBannerSrc(src: string, adKey: string) {
+  return `${src}?key=${encodeURIComponent(adKey)}`;
 }
 
 export function AdBanner({
@@ -156,6 +112,8 @@ export function AdBanner({
     return null;
   }
 
+  const src = getAdsterraBannerSrc(ad.src, key);
+
   return (
     <div className={cn("flex w-full items-center justify-center", className)}>
       <div className="relative w-fit">
@@ -163,9 +121,8 @@ export function AdBanner({
           height={ad.height}
           loading={eager ? "eager" : "lazy"}
           referrerPolicy="strict-origin-when-cross-origin"
-          sandbox={AD_IFRAME_SANDBOX}
           scrolling="no"
-          srcDoc={getAdsterraSrcDoc(key, ad.width, ad.height)}
+          src={src}
           style={{
             border: "none",
             display: "block",
@@ -216,7 +173,6 @@ export function AdsterraBanner({
         <iframe
           height={ad.height}
           referrerPolicy="strict-origin-when-cross-origin"
-          sandbox={AD_IFRAME_SANDBOX}
           scrolling="no"
           src={ad.src}
           style={{
