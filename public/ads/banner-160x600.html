@@ -2,8 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=160, initial-scale=1" />
-    <meta name="robots" content="noindex,nofollow" />
+    <meta name="viewport" content="width=160,height=600,initial-scale=1" />
     <style>
       html,
       body {
@@ -18,17 +17,24 @@
   </head>
   <body>
     <script type="text/javascript">
-      var adsterraKey = "";
-      var atOptions = {
-        "key": adsterraKey,
-        "format": "iframe",
-        "height": 600,
-        "width": 160,
-        "params": {}
-      };
+      const adsterraWidth = 160;
+      const adsterraHeight = 600;
+      const adsterraKey = new URLSearchParams(window.location.search).get("key") || "";
 
       if (adsterraKey) {
-        document.write('<script type="text/javascript" src="//www.highperformanceformat.com/' + adsterraKey + '/invoke.js"><\/script>');
+        var atOptions = {
+          key: adsterraKey,
+          format: "iframe",
+          height: adsterraHeight,
+          width: adsterraWidth,
+          params: {}
+        };
+
+        const invokeScript = document.createElement("script");
+        invokeScript.type = "text/javascript";
+        invokeScript.src =
+          "https://www.highperformanceformat.com/" + adsterraKey + "/invoke.js";
+        document.body.appendChild(invokeScript);
       }
     </script>
   </body>

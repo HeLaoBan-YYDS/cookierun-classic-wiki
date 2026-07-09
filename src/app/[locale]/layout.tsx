@@ -92,9 +92,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <NextIntlClientProvider messages={messages}>
             <JsonLd data={organization} />
             <SiteHeader locale={locale} />
-            <StickyTopAd type="banner-320x50" adKey={stickyTopAdKey} eager />
-            <StickySidebarAd placement="left-sidebar" type="banner-160x600" adKey={stickySidebarAdKey} eager />
-            <StickySidebarAd placement="right-sidebar" type="banner-160x300" adKey={stickyRightSidebarAdKey} eager />
+            <StickyTopAd type="banner-320x50" adKey={stickyTopAdKey} dismissible />
+            <StickySidebarAd adKey={stickySidebarAdKey} />
+            <StickySidebarAd placement="right-160x300" adKey={stickyRightSidebarAdKey} />
             <div className={contentAdOffsetClassName}>
               {children}
               <SiteFooter locale={locale} />
