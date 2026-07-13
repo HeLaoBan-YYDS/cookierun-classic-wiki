@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bea6a923-81f0-4487-95c6-51fed8751e13" name="Changes" comment="广告白屏问题处理">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="bea6a923-81f0-4487-95c6-51fed8751e13" name="Changes" comment="广告优化" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -102,6 +100,7 @@
       <workItem from="1782961926605" duration="3254000" />
       <workItem from="1783052452092" duration="631000" />
       <workItem from="1783437697264" duration="2771000" />
+      <workItem from="1783590218311" duration="983000" />
     </task>
     <task id="LOCAL-00001" summary="初始化">
       <option name="closed" value="true" />
@@ -215,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1783439393335</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="广告优化">
+      <option name="closed" value="true" />
+      <created>1783590417347</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1783590417347</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,6 +254,7 @@
     <MESSAGE value="ads广告" />
     <MESSAGE value="去除多余广告" />
     <MESSAGE value="广告白屏问题处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="广告白屏问题处理" />
+    <MESSAGE value="广告优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="广告优化" />
   </component>
 </project>

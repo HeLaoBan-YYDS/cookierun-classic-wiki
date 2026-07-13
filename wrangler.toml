@@ -1,0 +1,18 @@
+# Cloudflare Pages 部署配置
+# ----------------------------------------------------------------------
+# 配合 `next build` 产物 `out/` 目录部署（next.config.mjs 中 `output: "export"`）。
+# 通过 wrangler 部署：`wrangler pages deploy out --project-name <name>`
+# 也可以在 Cloudflare Dashboard 直接连接 GitHub 构建设置：
+#   - Build command:  bun run build
+#   - Build output:   out
+#   - Root directory: (留空)
+#   - Compatibility:  不需要（纯静态资源，无 Functions）
+# ----------------------------------------------------------------------
+
+name = "cookierun-classic-wiki"
+compatibility_date = "2026-07-13"
+pages_build_output_dir = "./out"
+
+# 静态资源无需任何 Workers Functions
+# 如果未来需要在边缘加少量动态逻辑（如 /api/* 反代），
+# 在此追加 `[[functions]]` 与 `[[routes]]` 规则即可。

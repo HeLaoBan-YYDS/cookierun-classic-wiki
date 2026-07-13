@@ -14,9 +14,12 @@ const withMDX = createMDX({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",
+  // 纯静态导出，产物输出到 `out/` 目录，可直接托管到 Cloudflare Pages / Workers Static Assets。
+  // 关闭所有 Node.js 运行时：避免 CPU 资源消耗，所有页面在 build 时预渲染为 HTML。
+  output: "export",
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-  allowedDevOrigins: ["*.preview.same-app.com"],
+  trailingSlash: true,
+  // 静态导出必须 unoptimized，否则 next/image 会尝试按需优化图片（需要 Node 服务）
   images: {
     unoptimized: true,
     remotePatterns: [

@@ -45,7 +45,8 @@ export function LanguageSwitcher({ locale }: { locale: string }) {
       newPath = `/${nextLocale}${newPath === "/" ? "" : newPath}`;
     }
 
-    // 设置 NEXT_LOCALE cookie，防止 middleware 重定向回原语言
+    // 静态导出模式下没有 next-intl middleware，
+    // NEXT_LOCALE cookie 在此仅作历史兼容保留（不影响行为）。
     document.cookie = `NEXT_LOCALE=${nextLocale};path=/;max-age=${60 * 60 * 24 * 365};SameSite=Lax`;
 
     router.push(newPath);

@@ -49,6 +49,16 @@ function deepMerge<T>(base: T, override: Partial<T>): T {
   return result as T;
 }
 
+/**
+ * Static-export friendly request config.
+ *
+ * In the previous Edge-Runtime build the active locale was injected by
+ * `next-intl/middleware` and read via `requestLocale`. After migrating to
+ * Cloudflare Pages static export there is no middleware, so each page/layout
+ * must call `setRequestLocale(locale)` itself. The `requestLocale`
+ * field is then populated by next-intl's internal store; if a page forgets to
+ * call it (e.g. 404 fallback) we gracefully fall back to the default locale.
+ */
 export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale;
   const locale = hasLocale(routing.locales, requested)

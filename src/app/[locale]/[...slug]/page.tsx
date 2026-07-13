@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight, Swords } from "lucide-react";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { getAllContent, getAllContentPaths, getContent, getDynamicNavigation, type ContentItem } from "@/lib/content";
 import { Breadcrumbs, JsonLd, WikiSidebar, localizeHref } from "@/components/site";
@@ -27,13 +27,21 @@ function languageAlternates(pathname: string) {
 }
 
 export async function generateStaticParams() {
-  const paths = await getAllContentPaths("en");
+  // 为每种语言预渲染所有内容页（slug 在 [locale] 之下，URL 已经天然按语言切分）
   const listingPages = CONTENT_TYPES.map((ct) => ({ slug: [ct] }));
-  return [...listingPages, ...paths.map((item) => ({ slug: [item.contentType, ...item.slug] }))];
+  const detailParams: Array<{ slug: string[] }> = [];
+  for (const locale of routing.locales) {
+    const paths = await getAllContentPaths(locale);
+    for (const item of paths) {
+      detailParams.push({ slug: [item.contentType, ...item.slug] });
+    }
+  }
+  return [...listingPages, ...detailParams];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale; slug: string[] }> }): Promise<Metadata> {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const messages = (await getMessages({ locale })) as Messages;
   if (slug.length === 1 && CONTENT_TYPES.includes(slug[0])) {
     const ct = slug[0];
@@ -56,6 +64,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
 
 export default async function SlugPage({ params }: { params: Promise<{ locale: Locale; slug: string[] }> }) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const navGroups = getDynamicNavigation(locale);
   if (slug.length === 1) return <NavigationPage locale={locale} contentType={slug[0]} navGroups={navGroups} />;
   return <DetailPage locale={locale} contentType={slug[0]} slug={slug.slice(1)} navGroups={navGroups} />;
@@ -63,6 +72,7 @@ export default async function SlugPage({ params }: { params: Promise<{ locale: L
 
 async function NavigationPage({ locale, contentType, navGroups }: { locale: Locale; contentType: string; navGroups: import("@/lib/content").NavGroup[] }) {
   if (!CONTENT_TYPES.includes(contentType)) notFound();
+  setRequestLocale(locale);
   const messages = (await getMessages({ locale })) as Messages;
   const items = await getAllContent(contentType, locale);
   const listData = { "@context": "https://schema.org", "@type": "ItemList", name: `${contentType} — CookieRun Classic Wiki`, itemListElement: items.map((item, index) => ({ "@type": "ListItem", position: index + 1, url: `${siteUrl}${localizedPathname(`/${contentType}/${item.slug}`, locale)}`, name: item.metadata.title })) };
@@ -77,6 +87,7 @@ async function NavigationPage({ locale, contentType, navGroups }: { locale: Loca
 
 async function DetailPage({ locale, contentType, slug, navGroups }: { locale: Locale; contentType: string; slug: string[]; navGroups: import("@/lib/content").NavGroup[] }) {
   if (!CONTENT_TYPES.includes(contentType)) notFound();
+  setRequestLocale(locale);
   const messages = (await getMessages({ locale })) as Messages;
   const item = await getContent(contentType, slug, locale);
   if (!item) notFound();
