@@ -23,10 +23,10 @@ export async function generateStaticParams() {
   const allParams: Array<{ locale: string; slug: string[] }> = [];
   const otherLocales = routing.locales.filter((l) => l !== routing.defaultLocale);
 
-  // 英文文章详情：[locale]=<contentType> + slug=["xxx"]
+  // 英文文章详情：[locale]=<contentType> + slug=[<articleSlugParts>]
   const enArticlePaths = await getAllContentPaths(routing.defaultLocale);
   for (const item of enArticlePaths) {
-    allParams.push({ locale: item.contentType, slug: [item.slug.join("/")] });
+    allParams.push({ locale: item.contentType, slug: [...item.slug] });
   }
 
   // th/ko/ja 的单段分类列表：[locale]=<lang> + slug=[<contentType>]
