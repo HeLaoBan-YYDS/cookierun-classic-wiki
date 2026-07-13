@@ -1,0 +1,35 @@
+﻿   ▲ Next.js 15.3.7
+   - Local:        http://localhost:3000
+   - Network:      http://0.0.0.0:3000
+   - Environments: .env
+
+ ✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+ ✓ Ready in 5.9s
+node.exe : <w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of D:\code\CookieRun_Classic\node_m
+odules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t)'.
+At line:1 char:1
++ & "D:\app\node24/node.exe" "D:\app\node24/node_modules/npm/bin/npx-cl ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (<w> [webpack.ca...at 'import(t)'.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+ ○ Compiling /[locale]/[...slug] ...
+ ✓ Compiled /[locale] in 10s (1309 modules)
+ GET /codes/ 200 in 10991ms
+ GET /ko/guide/ 200 in 11652ms
+ GET /ja/guide/ 200 in 11297ms
+ GET /th/guide/ 200 in 12066ms
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of D:\code\CookieRun_Classic\node_modules\next
+-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+ ✓ Compiled / in 485ms (1300 modules)
+ GET / 200 in 1151ms
+ GET /guide/ 200 in 244ms
+ GET /th/ 200 in 419ms
+ GET /guide/ 200 in 222ms

@@ -1,6 +1,19 @@
+import { hasLocale } from "next-intl";
+import { notFound } from "next/navigation";
+import { CONTENT_TYPES } from "@/config/navigation";
+import { routing } from "@/i18n/routing";
 import { LegalPage } from "@/components/legal-page";
 
-export default function TermsOfServicePage() {
+export function generateStaticParams() {
+  return routing.locales
+    .filter((locale) => locale !== routing.defaultLocale)
+    .map((locale) => ({ locale }));
+}
+
+export default async function LocaleTermsOfServicePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (CONTENT_TYPES.includes(locale)) notFound();
+  if (!hasLocale(routing.locales, locale) || locale === routing.defaultLocale) notFound();
   return (
     <LegalPage title="Terms of Service">
       <p>This site is an independent fan-made guide hub. Content is provided for informational and entertainment purposes only.</p>

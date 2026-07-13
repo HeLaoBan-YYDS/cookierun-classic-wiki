@@ -3,15 +3,12 @@
 # 所有跳转都通过 _redirects 在边缘完成。
 # 注意：每条规则独占一行，格式为 `<from>  <to>  <status>`。
 
-# next-intl 4.x + localePrefix: "as-needed" 下：
-#  - 英文（默认）路径无前缀：/guide/...
-#  - 其它 locale 带前缀：/th/guide/...
-#  - 根 / 直接由 [locale]/page.tsx 在 en 下渲染
-# 下面两条规则保证即使用户手动输入 /en 也能正确跳转（SEO 友好）。
-
+# 防御：用户外链 / 历史 /en 入口时 301 到无前缀英文版
+# （默认 locale 的英文页由 app/page.tsx 渲染到根，不在 /en/ 下）
 /en                  /                  301
 /en/*                /:splat            301
 
 # next 静态导出在 root 不会自动生成 404.html，
 # Cloudflare Pages 会自动兜底渲染 _redirects 的最后一条 fallback，
 # 但我们提供一个真实的 404.html（见 public/404.html）来保证体验一致。
+

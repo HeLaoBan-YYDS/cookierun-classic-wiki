@@ -2,15 +2,14 @@ import type { MetadataRoute } from "next";
 import { getAllContentPaths } from "@/lib/content";
 import { CONTENT_TYPES } from "@/config/navigation";
 import { routing } from "@/i18n/routing";
+import { siteUrl } from "@/lib/i18n-paths";
 
 // 静态导出要求所有路由显式声明 force-static
 export const dynamic = "force-static";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cookierun-classic-wiki.wiki";
-
-  // Static paths that always exist
-  const staticPaths = [
+  // 静态路径：根级无前缀（英文） + 各 locale 带前缀
+  const rootStaticPaths = [
     "/",
     "/guide",
     "/codes",
@@ -26,23 +25,41 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/about",
   ];
 
-  // 扫描所有 locale 的内容（默认 en 与其它 locale 可能存在差异，
-  // 静态导出模式下每种语言各自产出了自己的页面，sitemap 也应同步覆盖）
-  const perLocaleDynamicPaths: Record<string, string[]> = { en: [], th: [], ko: [], ja: [] };
-  for (const locale of routing.locales) {
-    const contentPaths = await getAllContentPaths(locale);
-    perLocaleDynamicPaths[locale] = contentPaths.map((item) => `/${[item.contentType, ...item.slug].join("/")}`);
+  // 英文内容动态路径（默认 locale 直接走根，无前缀）
+  const enContentPaths = await getAllContentPaths(routing.defaultLocale);
+  const enDynamicPaths = enContentPaths.map((item) => `/${[item.contentType, ...item.slug].join("/")}`);
+  const enPaths = [...rootStaticPaths, ...enDynamicPaths];
+
+  // 其它 locale 的动态内容路径
+  const otherLocales = routing.locales.filter((locale) => locale !== routing.defaultLocale);
+  const perLocaleDynamicPaths: Record<string, string[]> = Object.fromEntries(
+    await Promise.all(
+      otherLocales.map(async (locale) => {
+        const contentPaths = await getAllContentPaths(locale);
+        return [locale, contentPaths.map((item) => `/${[item.contentType, ...item.slug].join("/")}`)];
+      }),
+    ),
+  );
+
+  const entries: MetadataRoute.Sitemap = enPaths.map((path) => ({
+    url: `${siteUrl}${path === "/" ? "" : path}`,
+    lastModified: new Date(),
+    changeFrequency: path === "/" ? ("daily" as const) : ("weekly" as const),
+    priority: path === "/" ? 1 : CONTENT_TYPES.some((ct) => path === `/${ct}`) ? 0.8 : 0.6,
+  }));
+
+  for (const locale of otherLocales) {
+    const dynamicPaths = perLocaleDynamicPaths[locale] ?? [];
+    const allPaths = [...rootStaticPaths, ...dynamicPaths];
+    for (const path of allPaths) {
+      entries.push({
+        url: `${siteUrl}/${locale}${path === "/" ? "" : path}`,
+        lastModified: new Date(),
+        changeFrequency: path === "/" ? ("daily" as const) : ("weekly" as const),
+        priority: path === "/" ? 0.9 : CONTENT_TYPES.some((ct) => path === `/${ct}`) ? 0.7 : 0.5,
+      });
+    }
   }
 
-  return routing.locales.flatMap((locale) => {
-    const isDefault = locale === routing.defaultLocale;
-    const dynamicPaths = perLocaleDynamicPaths[locale] ?? [];
-    const paths = [...staticPaths, ...dynamicPaths];
-    return paths.map((path) => ({
-      url: `${siteUrl}${isDefault ? "" : `/${locale}`}${path === "/" ? "" : path}`,
-      lastModified: new Date(),
-      changeFrequency: path === "/" ? ("daily" as const) : ("weekly" as const),
-      priority: path === "/" ? 1 : CONTENT_TYPES.some((contentType) => path === `/${contentType}`) ? 0.8 : 0.6,
-    }));
-  });
+  return entries;
 }

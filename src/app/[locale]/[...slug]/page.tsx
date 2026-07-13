@@ -1,117 +1,67 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
+import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import { ChevronRight, Swords } from "lucide-react";
-import { getMessages, setRequestLocale } from "next-intl/server";
-import { Badge } from "@/components/ui/badge";
-import { getAllContent, getAllContentPaths, getContent, getDynamicNavigation, type ContentItem } from "@/lib/content";
-import { Breadcrumbs, JsonLd, WikiSidebar, localizeHref } from "@/components/site";
-import { MobileTOC, SidebarTOC } from "@/components/table-of-contents";
+import { setRequestLocale } from "next-intl/server";
+import { getAllContentPaths, getDynamicNavigation } from "@/lib/content";
 import { CONTENT_TYPES } from "@/config/navigation";
 import { routing, type Locale } from "@/i18n/routing";
-import en from "@/locales/en.json";
+import { generateSlugMetadata, SlugView } from "../../_views/SlugView";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cookierun-classic-wiki.wiki";
-type Messages = typeof en;
-
-function localizedPathname(pathname: string, locale: Locale) {
-  return locale === routing.defaultLocale ? pathname : `/${locale}${pathname === "/" ? "" : pathname}`;
-}
-
-function languageAlternates(pathname: string) {
-  return {
-    ...Object.fromEntries(routing.locales.map((locale) => [locale, localizedPathname(pathname, locale)])),
-    "x-default": pathname,
-  };
-}
-
+/**
+ * `[locale]/[...slug]/page.tsx` 承担（多段路径）：
+ *   - 英文文章详情（/guide/xxx 等，通过 [locale]=<contentType> + slug=["xxx"]，
+ *     产物 `out/en/guide/xxx/index.html` 由 postbuild 移根）
+ *   - th/ko/ja 的单段分类列表（/th/guide、/ko/codes 等）
+ *   - th/ko/ja 的文章详情（/th/guide/xxx 等）
+ *
+ * 注：单段路径（/guide、/about、/en、/th）的处理：
+ *   - `/guide` 等英文分类 → 由 `[locale]/page.tsx` 用 [locale]=guide 处理
+ *   - `/about` 等英文法律页 → 由根级 static 路由（`app/about/page.tsx`）处理
+ *   - `/en`、`/th` 等 → 由 `[locale]/page.tsx` 处理
+ */
 export async function generateStaticParams() {
-  // 为每种语言预渲染所有内容页（slug 在 [locale] 之下，URL 已经天然按语言切分）
-  const listingPages = CONTENT_TYPES.map((ct) => ({ slug: [ct] }));
-  const detailParams: Array<{ slug: string[] }> = [];
-  for (const locale of routing.locales) {
-    const paths = await getAllContentPaths(locale);
-    for (const item of paths) {
-      detailParams.push({ slug: [item.contentType, ...item.slug] });
+  const allParams: Array<{ locale: string; slug: string[] }> = [];
+  const otherLocales = routing.locales.filter((l) => l !== routing.defaultLocale);
+
+  // 英文文章详情：[locale]=<contentType> + slug=["xxx"]
+  const enArticlePaths = await getAllContentPaths(routing.defaultLocale);
+  for (const item of enArticlePaths) {
+    allParams.push({ locale: item.contentType, slug: [item.slug.join("/")] });
+  }
+
+  // th/ko/ja 的单段分类列表：[locale]=<lang> + slug=[<contentType>]
+  for (const locale of otherLocales) {
+    for (const ct of CONTENT_TYPES) {
+      allParams.push({ locale, slug: [ct] });
     }
   }
-  return [...listingPages, ...detailParams];
-}
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: Locale; slug: string[] }> }): Promise<Metadata> {
-  const { locale, slug } = await params;
-  setRequestLocale(locale);
-  const messages = (await getMessages({ locale })) as Messages;
-  if (slug.length === 1 && CONTENT_TYPES.includes(slug[0])) {
-    const ct = slug[0];
-    const ctTitle = ct.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-    const ctMessages = (messages as unknown as Record<string, Record<string, string>>)[ct];
-    const title = ctMessages?.overviewTitle || `${ctTitle} — CookieRun Classic Wiki`;
-    const description = ctMessages?.overviewDescription || `Browse all ${ctTitle.toLowerCase()} guides and resources for CookieRun Classic.`;
-    const pathname = `/${ct}`;
-    const canonical = localizedPathname(pathname, locale);
-    return { title, description, alternates: { canonical, languages: languageAlternates(pathname) }, openGraph: { title, description, url: `${siteUrl}${canonical}`, images: [`${siteUrl}/images/hero.webp`] } };
+  // th/ko/ja 的文章详情：[locale]=<lang> + slug=[<contentType>, ...articleSlug]
+  for (const locale of otherLocales) {
+    const paths = await getAllContentPaths(locale);
+    for (const item of paths) {
+      allParams.push({ locale, slug: [item.contentType, ...item.slug] });
+    }
   }
-  const [contentType, ...articleSlug] = slug;
-  const item = await getContent(contentType, articleSlug, locale);
-  if (!item) return { title: "Not Found" };
-  const pathname = `/${contentType}/${articleSlug.join("/")}`;
-  const canonical = localizedPathname(pathname, locale);
-  const image = item.metadata.image?.startsWith("http") ? item.metadata.image : `${siteUrl}${item.metadata.image ?? "/images/hero.webp"}`;
-  return { title: `${item.metadata.title} — CookieRun Classic Wiki`, description: item.metadata.description, alternates: { canonical, languages: languageAlternates(pathname) }, openGraph: { type: "article", title: item.metadata.title, description: item.metadata.description, url: `${siteUrl}${canonical}`, images: [image] }, twitter: { card: "summary_large_image", images: [image] } };
+
+  return allParams;
 }
 
-export default async function SlugPage({ params }: { params: Promise<{ locale: Locale; slug: string[] }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string[] }> }): Promise<Metadata> {
   const { locale, slug } = await params;
-  setRequestLocale(locale);
-  const navGroups = getDynamicNavigation(locale);
-  if (slug.length === 1) return <NavigationPage locale={locale} contentType={slug[0]} navGroups={navGroups} />;
-  return <DetailPage locale={locale} contentType={slug[0]} slug={slug.slice(1)} navGroups={navGroups} />;
+  const effectiveLocale = CONTENT_TYPES.includes(locale) ? routing.defaultLocale : locale;
+  if (!hasLocale(routing.locales, effectiveLocale)) return {};
+  setRequestLocale(effectiveLocale);
+  const finalSlug = CONTENT_TYPES.includes(locale) ? [locale, ...slug] : slug;
+  return generateSlugMetadata({ locale: effectiveLocale as Locale, slug: finalSlug });
 }
 
-async function NavigationPage({ locale, contentType, navGroups }: { locale: Locale; contentType: string; navGroups: import("@/lib/content").NavGroup[] }) {
-  if (!CONTENT_TYPES.includes(contentType)) notFound();
-  setRequestLocale(locale);
-  const messages = (await getMessages({ locale })) as Messages;
-  const items = await getAllContent(contentType, locale);
-  const listData = { "@context": "https://schema.org", "@type": "ItemList", name: `${contentType} — CookieRun Classic Wiki`, itemListElement: items.map((item, index) => ({ "@type": "ListItem", position: index + 1, url: `${siteUrl}${localizedPathname(`/${contentType}/${item.slug}`, locale)}`, name: item.metadata.title })) };
-
-  // 读取分类标题（优先用 locale JSON 里的，没有就转 slug）
-  const sectionTitle = (messages as unknown as Record<string, Record<string, string>>)[contentType]?.overviewTitle
-    || contentType.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-  const sectionDesc = (messages as unknown as Record<string, Record<string, string>>)[contentType]?.overviewDescription || "";
-
-  return <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"><JsonLd data={listData} /><div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]"><article><Breadcrumbs items={[{ label: messages.shared.home, href: localizeHref("/", locale) }, { label: sectionTitle }]} /><h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">{sectionTitle}</h1>{sectionDesc && <p className="mt-5 text-lg leading-8 text-muted-foreground">{sectionDesc}</p>}{items.length > 0 && <><div className="mt-10 grid gap-4 sm:grid-cols-2">{items.map((item) => <Link key={`/${contentType}/${item.slug}`} href={localizeHref(`/${contentType}/${item.slug}`, locale)} className="group rounded-2xl border border-border bg-card/70 p-5 transition hover:-translate-y-0.5 hover:border-[hsl(var(--nav-theme-light))]"><div className="mb-4 flex items-center justify-between gap-3"><span className="grid h-10 w-10 place-items-center rounded-xl bg-muted text-[hsl(var(--nav-theme))]"><Swords className="h-5 w-5" /></span>{item.metadata.badge && <Badge variant="secondary">{item.metadata.badge}</Badge>}</div><h3 className="text-lg font-bold text-foreground group-hover:text-[hsl(var(--nav-theme))]">{item.metadata.title}</h3><p className="mt-2 min-h-[3rem] text-sm leading-6 text-muted-foreground">{item.metadata.description}</p><span className="mt-4 inline-flex items-center text-sm font-semibold text-[hsl(var(--nav-theme))]">{messages.shared.readMore}<ChevronRight className="ml-1 h-4 w-4" /></span></Link>)}</div></>}{items.length === 0 && <p className="mt-8 text-muted-foreground">{messages.shared.noGuidesAvailable}</p>}</article><WikiSidebar locale={locale} navGroups={navGroups} currentPath={`/${contentType}`} /></div></main>;
+export default async function LocaleSlugPage({ params }: { params: Promise<{ locale: string; slug: string[] }> }) {
+  const { locale, slug } = await params;
+  const effectiveLocale = CONTENT_TYPES.includes(locale) ? routing.defaultLocale : locale;
+  if (!hasLocale(routing.locales, effectiveLocale)) notFound();
+  setRequestLocale(effectiveLocale);
+  const finalSlug = CONTENT_TYPES.includes(locale) ? [locale, ...slug] : slug;
+  const navGroups = getDynamicNavigation(effectiveLocale as Locale);
+  return SlugView({ locale: effectiveLocale as Locale, slug: finalSlug, navGroups });
 }
-
-async function DetailPage({ locale, contentType, slug, navGroups }: { locale: Locale; contentType: string; slug: string[]; navGroups: import("@/lib/content").NavGroup[] }) {
-  if (!CONTENT_TYPES.includes(contentType)) notFound();
-  setRequestLocale(locale);
-  const messages = (await getMessages({ locale })) as Messages;
-  const item = await getContent(contentType, slug, locale);
-  if (!item) notFound();
-  const pathname = `/${contentType}/${slug.join("/")}`;
-  const canonical = localizedPathname(pathname, locale);
-  const tocLabel = messages.shared.tableOfContents || messages.shared.inThisSection || "Table of Contents";
-  const sectionLabel = contentType.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-  const articleImage = item.metadata.image?.startsWith("http") ? item.metadata.image : `${siteUrl}${item.metadata.image ?? "/images/hero.webp"}`;
-  const articleData = { "@context": "https://schema.org", "@type": "Article", headline: item.metadata.title, description: item.metadata.description, image: articleImage, datePublished: item.metadata.date, dateModified: item.metadata.lastModified ?? item.metadata.date, mainEntityOfPage: `${siteUrl}${canonical}`, author: { "@type": "Organization", name: "CookieRun Classic Wiki" }, publisher: { "@type": "Organization", name: "CookieRun Classic Wiki", logo: { "@type": "ImageObject", url: `${siteUrl}/android-chrome-512x512.png` } } };
-  const breadcrumbData = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: `${siteUrl}${localizedPathname("/", locale) === "/" ? "" : localizedPathname("/", locale)}` }, { "@type": "ListItem", position: 2, name: sectionLabel, item: `${siteUrl}${localizedPathname(`/${contentType}`, locale)}` }, { "@type": "ListItem", position: 3, name: item.metadata.title, item: `${siteUrl}${canonical}` }] };
-
-  const relatedLabel = messages.shared.relatedGuides || "Related Guides";
-
-  return <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"><JsonLd data={articleData} /><JsonLd data={breadcrumbData} /><div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]"><article><Breadcrumbs items={[{ label: messages.shared.home, href: localizeHref("/", locale) }, { label: sectionLabel, href: localizeHref(`/${contentType}`, locale) }, { label: item.metadata.title }]} /><h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">{item.metadata.title}</h1><p className="mt-5 text-lg leading-8 text-muted-foreground">{item.metadata.summary ?? item.metadata.description}</p><MobileTOC headings={item.headings} label={tocLabel} /><div className="prose-invert mt-10 max-w-none"><item.MDXContent /></div><ArticleCards locale={locale} contentType={contentType} currentSlug={slug.join("/")} relatedLabel={relatedLabel} /></article><aside className="space-y-6"><SidebarTOC headings={item.headings} label={tocLabel} currentPathname={pathname} /><WikiSidebar locale={locale} navGroups={navGroups} currentPath={pathname} /></aside></div></main>;
-}
-
-async function ArticleCards({ locale, contentType, currentSlug, relatedLabel }: { locale: string; contentType: string; currentSlug: string; relatedLabel: string }) {
-  // 动态获取同分类其他文章（排除当前文章）
-  const allItems = await getAllContent(contentType, locale as Locale);
-  const related = allItems.filter((item) => item.slug !== currentSlug).slice(0, 4);
-
-  if (related.length === 0) return null;
-
-  return <div className="mt-12 space-y-8"><section><h3 className="text-xl font-bold text-foreground">{relatedLabel}</h3><div className="mt-4 grid gap-4 sm:grid-cols-2">{related.map((item) => <SmallCard key={item.slug} icon={<Swords className="h-5 w-5" />} title={item.metadata.title} description={item.metadata.description} href={localizeHref(`/${contentType}/${item.slug}`, locale)} />)}</div></section></div>;
-}
-
-function SmallCard({ title, description, href, icon }: { title: string; description: string; href: string; icon?: React.ReactNode }) { return <Link href={href} className="block rounded-2xl border border-border bg-card/70 p-5 transition hover:border-[hsl(var(--nav-theme-light))]">{icon && <div className="mb-3 text-[hsl(var(--nav-theme))]">{icon}</div>}<h4 className="font-bold text-foreground">{title}</h4><p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p></Link>; }

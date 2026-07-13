@@ -1,19 +1,6 @@
-import { hasLocale } from "next-intl";
-import { notFound } from "next/navigation";
-import { CONTENT_TYPES } from "@/config/navigation";
-import { routing } from "@/i18n/routing";
 import { LegalPage } from "@/components/legal-page";
 
-export function generateStaticParams() {
-  return routing.locales
-    .filter((locale) => locale !== routing.defaultLocale)
-    .map((locale) => ({ locale }));
-}
-
-export default async function LocalePrivacyPolicyPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  if (CONTENT_TYPES.includes(locale)) notFound();
-  if (!hasLocale(routing.locales, locale) || locale === routing.defaultLocale) notFound();
+export default function PrivacyPolicyPage() {
   return (
     <LegalPage title="Privacy Policy">
       <p>This fan wiki provides informational game guides for CookieRun Classic. We do not request DevPlay credentials, platform passwords, or private payment information.</p>

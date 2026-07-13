@@ -1,0 +1,87 @@
+﻿⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+   ▲ Next.js 15.3.7
+   - Environments: .env
+
+   Creating an optimized production build ...
+node.exe : <w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of D:\code\CookieRun_Classic\node_m
+odules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t)'.
+At line:1 char:1
++ & "D:\app\node24/node.exe" "D:\app\node24/node_modules/npm/bin/npx-cl ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (<w> [webpack.ca...at 'import(t)'.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of D:\code\CookieRun_Classic\node_modules\next
+-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of D:\code\CookieRun_Classic\node_modules\next
+-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+ ✓ Compiled successfully in 12.0s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/202) ...
+   Generating static pages (50/202) 
+   Generating static pages (100/202) 
+   Generating static pages (151/202) 
+ ✓ Generating static pages (202/202)
+   Finalizing page optimization ...
+   Collecting build traces ...
+   Exporting (0/3) ...
+ ✓ Exporting (3/3)
+
+Route (app)                                           Size  First Load JS
+┌ ○ /                                              1.32 kB         159 kB
+├ ○ /_not-found                                      153 B         102 kB
+├ ● /[...slug]                                     1.78 kB         151 kB
+├   ├ /codes/cookierun-classic-codes
+├   ├ /combi/cookierun-classic-best-combi
+├   ├ /combi/cookierun-classic-coin-farming-combi
+├   └ [+33 more paths]
+├ ● /[locale]                                        876 B         158 kB
+├   ├ /en
+├   ├ /th
+├   ├ /ko
+├   └ [+9 more paths]
+├ ● /[locale]/[...slug]                              865 B         150 kB
+├   ├ /codes/cookierun-classic-codes
+├   ├ /combi/cookierun-classic-best-combi
+├   ├ /combi/cookierun-classic-coin-farming-combi
+├   └ [+165 more paths]
+├ ● /[locale]/about                                1.28 kB         103 kB
+├   ├ /th/about
+├   ├ /ko/about
+├   └ /ja/about
+├ ● /[locale]/copyright                            1.28 kB         103 kB
+├   ├ /th/copyright
+├   ├ /ko/copyright
+├   └ /ja/copyright
+├ ● /[locale]/privacy-policy                       1.28 kB         103 kB
+├   ├ /th/privacy-policy
+├   ├ /ko/privacy-policy
+├   └ /ja/privacy-policy
+├ ● /[locale]/terms-of-service                     1.28 kB         103 kB
+├   ├ /th/terms-of-service
+├   ├ /ko/terms-of-service
+├   └ /ja/terms-of-service
+├ ○ /about                                           153 B         102 kB
+├ ○ /copyright                                       153 B         102 kB
+├ ○ /privacy-policy                                  153 B         102 kB
+├ ○ /robots.txt                                      153 B         102 kB
+├ ○ /sitemap.xml                                     153 B         102 kB
+└ ○ /terms-of-service                                153 B         102 kB
++ First Load JS shared by all                       101 kB
+  ├ chunks/4bd1b696-f752727a6ad02635.js            53.2 kB
+  ├ chunks/684-1f325ba3ddfd48ad.js                 46.2 kB
+  └ other shared chunks (total)                    1.99 kB
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+

@@ -1,71 +1,51 @@
 import type { Metadata } from "next";
-import { getMessages, setRequestLocale } from "next-intl/server";
-import { JsonLd, WikiSidebar } from "@/components/site";
-import { getAllContent, getDynamicNavigation, type ContentItem, CONTENT_TYPES } from "@/lib/content";
+import { setRequestLocale } from "next-intl/server";
+import { hasLocale } from "next-intl";
+import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
-import en from "@/locales/en.json";
-import HomePageClient from "./HomePageClient";
+import { CONTENT_TYPES } from "@/config/navigation";
+import { getDynamicNavigation } from "@/lib/content";
+import { generateHomeMetadata } from "../_views/home-meta";
+import { HomeView } from "../_views/HomeView";
+import { generateSlugMetadata, SlugView } from "../_views/SlugView";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cookierun-classic-wiki.wiki";
-
-type Messages = typeof en;
-
-function localizedPathname(pathname: string, locale: Locale) {
-  return locale === routing.defaultLocale ? pathname : `/${locale}${pathname === "/" ? "" : pathname}`;
-}
-
-function languageAlternates(pathname: string) {
-  return {
-    ...Object.fromEntries(routing.locales.map((locale) => [locale, localizedPathname(pathname, locale)])),
-    "x-default": pathname,
-  };
+/**
+ * `[locale]/page.tsx` 在 Next.js 路由优先级里高于 catch-all，因此承担：
+ *   - `/{en,th,ko,ja}/`  各语言首页
+ *   - `/guide`、`/codes` ...  英文单段分类列表（CONTENT_TYPES 走这里，
+ *     effectiveLocale=en 渲染）
+ *
+ * 静态导出产物会输出 `out/en/index.html`（英文首页）与 `out/guide/index.html` 等；
+ * 部署时由 `scripts/postbuild.mjs` 把 `out/en/*` 移根，符合 as-needed 语义。
+ *
+ * dev 模式下，根级 `app/page.tsx` 处理 `/` 渲染英文首页（避免跳到 /en/），
+ * `/en/` 仍由本段处理（[locale]=en），便于调试与 QA。
+ */
+export async function generateStaticParams() {
+  const localeParams = routing.locales.map((locale) => ({ locale }));
+  const contentTypeParams = CONTENT_TYPES.map((ct) => ({ locale: ct }));
+  return [...localeParams, ...contentTypeParams];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  const loc = locale as Locale;
-  setRequestLocale(loc);
-  const messages = (await getMessages({ locale })) as Messages;
-  const canonical = localizedPathname("/", loc);
-  return {
-    title: messages.home.meta.title,
-    description: messages.home.meta.description,
-    alternates: { canonical, languages: languageAlternates("/") },
-    openGraph: { title: messages.home.meta.title, description: messages.home.meta.description, url: `${siteUrl}${canonical === "/" ? "" : canonical}`, images: [`${siteUrl}/images/hero.webp`] },
-  };
+  if (CONTENT_TYPES.includes(locale)) {
+    setRequestLocale(routing.defaultLocale);
+    return generateSlugMetadata({ locale: routing.defaultLocale, slug: [locale] });
+  }
+  if (!hasLocale(routing.locales, locale)) return {};
+  setRequestLocale(locale);
+  return generateHomeMetadata({ locale: locale as Locale });
 }
 
 export default async function LocaleHomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const loc = locale as Locale;
-  setRequestLocale(loc);
-  const messages = (await getMessages({ locale })) as Messages;
-  const navGroups = getDynamicNavigation(loc);
-  const webSite = { "@context": "https://schema.org", "@type": "WebSite", name: messages.site.name, url: siteUrl, description: messages.home.meta.description };
-
-  // 动态加载所有 content 目录下的文章
-  const allArticles: ContentItem[] = [];
-  for (const contentType of CONTENT_TYPES) {
-    const items = await getAllContent(contentType, loc);
-    allArticles.push(...items);
+  if (CONTENT_TYPES.includes(locale)) {
+    setRequestLocale(routing.defaultLocale);
+    const navGroups = getDynamicNavigation(routing.defaultLocale);
+    return SlugView({ locale: routing.defaultLocale, slug: [locale], navGroups });
   }
-
-  // 取最近更新的 8 篇文章（按 date 倒序）
-  const recentArticles = [...allArticles]
-    .sort((a, b) => {
-      const dateA = a.metadata.lastModified || a.metadata.date;
-      const dateB = b.metadata.lastModified || b.metadata.date;
-      return dateB.localeCompare(dateA);
-    })
-    .slice(0, 8);
-
-  return (
-    <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <JsonLd data={webSite} />
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
-        <HomePageClient home={messages.home} locale={locale} articles={allArticles} recentArticles={recentArticles} />
-        <WikiSidebar locale={locale} navGroups={navGroups} />
-      </div>
-    </main>
-  );
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+  return HomeView({ locale: locale as Locale });
 }
