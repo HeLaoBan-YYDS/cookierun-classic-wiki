@@ -8,9 +8,7 @@
     "start": "next start",
     "lint": "bunx tsc --noEmit && next lint",
     "format": "bunx biome format --write",
-    "preview": "npx wrangler pages dev ./out",
-    "deploy": "bun run build && npx wrangler pages deploy ./out --project-name cookierun-classic-wiki",
-    "deploy:preview": "bun run build && npx wrangler pages deploy ./out --project-name cookierun-classic-wiki --branch preview"
+    "preview": "npx wrangler pages dev ./out"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
