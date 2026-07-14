@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/extract-content.mjs",
     "dev": "next dev -H 0.0.0.0",
-    "build": "next build && node scripts/postbuild.mjs",
+    "prebuild": "node scripts/extract-content.mjs",
+    "build": "next build",
     "start": "next start",
-    "lint": "bunx tsc --noEmit && next lint",
-    "format": "bunx biome format --write",
-    "preview": "npx wrangler pages dev ./out"
+    "lint": "npx tsc --noEmit && next lint",
+    "format": "npx biome format --write",
+    "preview": "npx wrangler dev",
+    "cf:build": "opennextjs-cloudflare build",
+    "cf:dev": "wrangler dev",
+    "cf:deploy": "wrangler deploy"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -21,6 +26,7 @@
     "@radix-ui/react-slot": "^1.2.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "github-slugger": "^2.0.0",
     "lucide-react": "^0.475.0",
     "next": "15.3.7",
     "next-intl": "^4",
@@ -38,6 +44,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@eslint/eslintrc": "^3.3.1",
+    "@opennextjs/cloudflare": "^1.0.0",
     "@types/node": "^20.17.50",
     "@types/react": "^18.3.22",
     "@types/react-dom": "^18.3.7",

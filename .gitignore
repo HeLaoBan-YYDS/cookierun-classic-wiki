@@ -10,6 +10,13 @@ coverage/
 .next/
 out/
 
+# OpenNext for Cloudflare Workers
+.open-next/
+.wrangler/
+
+# prebuild 产物 (由 scripts/extract-content.mjs 写入)
+src/generated/
+
 # production
 build/
 
