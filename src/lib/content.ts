@@ -243,10 +243,18 @@ export async function getAllContentPaths(language: Locale) {
   const localeData = contentIndex.byLocale[language];
   if (!localeData) return [];
 
-  const paths: Array<{ contentType: string; slug: string[] }> = [];
+  const paths: Array<{
+    contentType: string;
+    slug: string[];
+    metadata: ContentMetadata;
+  }> = [];
   for (const [contentType, entries] of Object.entries(localeData)) {
     for (const entry of entries) {
-      paths.push({ contentType, slug: entry.slugSegments });
+      paths.push({
+        contentType,
+        slug: entry.slugSegments,
+        metadata: entry.metadata as ContentMetadata,
+      });
     }
   }
   return paths;
