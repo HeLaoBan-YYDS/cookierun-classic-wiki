@@ -13,26 +13,10 @@ const withMDX = createMDX({
   },
 });
 
-/**
- * Cloudflare Workers 适配 (OpenNext) 配置。
- *
- * 关键变化 (相对旧的 `output: "export"` Pages 静态导出)：
- *   - 移除 `output: "export"`: OpenNext for Workers 不支持 export 模式,改用
- *     标准 build + opennextjs-cloudflare prerender 全量预渲染。
- *   - `images.unoptimized: true` 保留:Workers 运行时无 sharp,任何 next/image
- *     优化都不可用。
- *   - `trailingSlash: false` (原来是 true):OpenNext 的 prerender 对
- *     `trailingSlash: true` 下的 static pages (无 generateStaticParams) 不生
- *     成对应的 `/about/` cache,导致运行时 404。改 false 后 prerender 走
- *     `/about` (无斜杠),Worker 用 308 把 `/about/` 跳过来。
- *   - 301 永久重定向 `/about/` → `/about` 等:保留原 Pages 部署的 URL 形
- *     式,避免 SEO 损失。308 是临时,搜索引擎不会更新索引;301 才是永久。
- *   - as-needed locale 重定向交给 `src/middleware.ts` (next-intl middleware),
- *     不再在 next.config 里写死 (避免与运行时中间件冲突)。
- *   - 安全 / 缓存 headers 从 `public/_headers` 迁到这里,OpenNext prerender
- *     阶段会把它们写入静态响应的 headers。
- */
+const isVercel = process.env.VERCEL === "1";
+
 const nextConfig: NextConfig = {
+  ...(isVercel ? {} : { output: "standalone" }),
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   trailingSlash: false,
   images: {
@@ -47,20 +31,27 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    // 保留旧 Pages 部署的 trailing-slash URL:访问 `/about/` 时永久 301 到
-    // 无斜杠的 `/about`。OpenNext 把这些 redirects 在 prerender 阶段烤成
-    // 静态响应。
     const roots = [
       "/about",
       "/copyright",
       "/privacy-policy",
       "/terms-of-service",
     ];
-    const out: Array<{ source: string; destination: string; permanent: boolean }> = [];
-    for (const p of roots) {
-      out.push({ source: `${p}/`, destination: p, permanent: true });
+    const redirects: Array<{
+      source: string;
+      destination: string;
+      permanent: boolean;
+    }> = [];
+
+    for (const path of roots) {
+      redirects.push({
+        source: `${path}/`,
+        destination: path,
+        permanent: true,
+      });
     }
-    return out;
+
+    return redirects;
   },
   async headers() {
     return [
