@@ -38,3 +38,13 @@ next-env.d.ts
 
 # same app
 .same/
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+
+!.env.example
