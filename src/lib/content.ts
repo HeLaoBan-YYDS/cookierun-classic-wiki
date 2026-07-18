@@ -10,7 +10,7 @@
 //   MDX 组件 (build time) ── esbuild split chunk ──> import() in worker/prerender
 // ----------------------------------------------------------------------------
 
-import contentIndex from "@/generated/content-index.json";
+import rawContentIndex from "@/generated/content-index.json";
 import enMessages from "@/locales/en.json";
 import jaMessages from "@/locales/ja.json";
 import koMessages from "@/locales/ko.json";
@@ -19,9 +19,6 @@ import { CONTENT_TYPES as CONFIG_CONTENT_TYPES } from "@/config/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 
 // ---- 类型 -----------------------------------------------------------------
-
-type Index = typeof contentIndex;
-export type FileEntry = Index["files"][string];
 
 // 复用同一份 shape,确保运行时拿到的 metadata/headings 跟 MDX 源一致
 export interface ContentMetadata {
@@ -65,6 +62,21 @@ export interface NavGroup {
   slug: string;
   links: Array<{ label: string; href: string; badge?: string }>;
 }
+
+export interface FileEntry {
+  fileName: string;
+  slug: string;
+  slugSegments: string[];
+  metadata: ContentMetadata;
+  headings: Heading[];
+}
+
+type ContentIndex = {
+  files: Record<string, FileEntry>;
+  byLocale: Partial<Record<Locale, Partial<Record<string, FileEntry[]>>>>;
+};
+
+const contentIndex = rawContentIndex as ContentIndex;
 
 // 从统一配置导入内容类型
 export const CONTENT_TYPES = CONFIG_CONTENT_TYPES;
@@ -249,6 +261,7 @@ export async function getAllContentPaths(language: Locale) {
     metadata: ContentMetadata;
   }> = [];
   for (const [contentType, entries] of Object.entries(localeData)) {
+    if (!entries) continue;
     for (const entry of entries) {
       paths.push({
         contentType,
